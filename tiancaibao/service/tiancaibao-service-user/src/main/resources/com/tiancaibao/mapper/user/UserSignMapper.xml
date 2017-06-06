@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.user.UserSignMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.user.UserSign" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="active_id" property="activeId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="hit_sum" property="hitSum" jdbcType="SMALLINT" />
+    <result column="hit_cur" property="hitCur" jdbcType="SMALLINT" />
+    <result column="hit_max" property="hitMax" jdbcType="SMALLINT" />
+    <result column="modified_date" property="modifiedDate" jdbcType="DATE" />
+    <result column="lists" property="lists" jdbcType="VARCHAR" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, active_id, user_id, hit_sum, hit_cur, hit_max, modified_date, lists, deleted_at
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.user.UserSignExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id,active_id,user_id,hit_sum,hit_cur,hit_max,modified_date,lists,deleted_at
+    from user_sign
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_sign
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.user.UserSignExample" >
+    delete from user_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserSign" >
+    insert into user_sign (id, active_id, user_id, 
+      hit_sum, hit_cur, hit_max, 
+      modified_date, lists, deleted_at
+      )
+    values (#{id,jdbcType=BIGINT}, #{activeId,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{hitSum,jdbcType=SMALLINT}, #{hitCur,jdbcType=SMALLINT}, #{hitMax,jdbcType=SMALLINT}, 
+      #{modifiedDate,jdbcType=DATE}, #{lists,jdbcType=VARCHAR}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserSign" >
+    insert into sign
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="activeId != null" >
+        active_id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="hitSum != null" >
+        hit_sum,
+      </if>
+      <if test="hitCur != null" >
+        hit_cur,
+      </if>
+      <if test="hitMax != null" >
+        hit_max,
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date,
+      </if>
+      <if test="lists != null" >
+        lists,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="activeId != null" >
+        #{activeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="hitSum != null" >
+        #{hitSum,jdbcType=SMALLINT},
+      </if>
+      <if test="hitCur != null" >
+        #{hitCur,jdbcType=SMALLINT},
+      </if>
+      <if test="hitMax != null" >
+        #{hitMax,jdbcType=SMALLINT},
+      </if>
+      <if test="modifiedDate != null" >
+        #{modifiedDate,jdbcType=DATE},
+      </if>
+      <if test="lists != null" >
+        #{lists,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.user.UserSignExample" resultType="java.lang.Integer" >
+    select count(*) from user_sign
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_sign
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.activeId != null" >
+        active_id = #{record.activeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.hitSum != null" >
+        hit_sum = #{record.hitSum,jdbcType=SMALLINT},
+      </if>
+      <if test="record.hitCur != null" >
+        hit_cur = #{record.hitCur,jdbcType=SMALLINT},
+      </if>
+      <if test="record.hitMax != null" >
+        hit_max = #{record.hitMax,jdbcType=SMALLINT},
+      </if>
+      <if test="record.modifiedDate != null" >
+        modified_date = #{record.modifiedDate,jdbcType=DATE},
+      </if>
+      <if test="record.lists != null" >
+        lists = #{record.lists,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_sign
+    set id = #{record.id,jdbcType=BIGINT},
+      active_id = #{record.activeId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      hit_sum = #{record.hitSum,jdbcType=SMALLINT},
+      hit_cur = #{record.hitCur,jdbcType=SMALLINT},
+      hit_max = #{record.hitMax,jdbcType=SMALLINT},
+      modified_date = #{record.modifiedDate,jdbcType=DATE},
+      lists = #{record.lists,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.user.UserSign" >
+    update user_sign
+    <set >
+      <if test="activeId != null" >
+        active_id = #{activeId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="hitSum != null" >
+        hit_sum = #{hitSum,jdbcType=SMALLINT},
+      </if>
+      <if test="hitCur != null" >
+        hit_cur = #{hitCur,jdbcType=SMALLINT},
+      </if>
+      <if test="hitMax != null" >
+        hit_max = #{hitMax,jdbcType=SMALLINT},
+      </if>
+      <if test="modifiedDate != null" >
+        modified_date = #{modifiedDate,jdbcType=DATE},
+      </if>
+      <if test="lists != null" >
+        lists = #{lists,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.user.UserSign" >
+    update user_sign
+    set active_id = #{activeId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=BIGINT},
+      hit_sum = #{hitSum,jdbcType=SMALLINT},
+      hit_cur = #{hitCur,jdbcType=SMALLINT},
+      hit_max = #{hitMax,jdbcType=SMALLINT},
+      modified_date = #{modifiedDate,jdbcType=DATE},
+      lists = #{lists,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.user.UserRiskAssessmentsMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.user.UserRiskAssessments" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="answer_a" property="answerA" jdbcType="VARCHAR" />
+    <result column="answer_b" property="answerB" jdbcType="VARCHAR" />
+    <result column="answer_c" property="answerC" jdbcType="VARCHAR" />
+    <result column="answer_d" property="answerD" jdbcType="VARCHAR" />
+    <result column="answer_e" property="answerE" jdbcType="VARCHAR" />
+    <result column="score_a" property="scoreA" jdbcType="INTEGER" />
+    <result column="score_b" property="scoreB" jdbcType="INTEGER" />
+    <result column="score_c" property="scoreC" jdbcType="INTEGER" />
+    <result column="score_d" property="scoreD" jdbcType="INTEGER" />
+    <result column="score_e" property="scoreE" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, title, answer_a, answer_b, answer_c, answer_d, answer_e, score_a, score_b, score_c, 
+      score_d, score_e, created_at, updated_at, deleted_at
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.user.UserRiskAssessmentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_risk_assessments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,title,answer_a,answer_b,answer_c,answer_d,answer_e,score_a,score_b,score_c,score_d,score_e,created_at,updated_at,deleted_at
+    from user_risk_assessments
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_risk_assessments
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.user.UserRiskAssessmentsExample" >
+    delete from user_risk_assessments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserRiskAssessments" >
+    insert into user_risk_assessments (id, title, answer_a, 
+      answer_b, answer_c, answer_d, 
+      answer_e, score_a, score_b, 
+      score_c, score_d, score_e, 
+      created_at, updated_at, deleted_at
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{answerA,jdbcType=VARCHAR}, 
+      #{answerB,jdbcType=VARCHAR}, #{answerC,jdbcType=VARCHAR}, #{answerD,jdbcType=VARCHAR}, 
+      #{answerE,jdbcType=VARCHAR}, #{scoreA,jdbcType=INTEGER}, #{scoreB,jdbcType=INTEGER}, 
+      #{scoreC,jdbcType=INTEGER}, #{scoreD,jdbcType=INTEGER}, #{scoreE,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserRiskAssessments" >
+    insert into user_risk_assessments
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="answerA != null" >
+        answer_a,
+      </if>
+      <if test="answerB != null" >
+        answer_b,
+      </if>
+      <if test="answerC != null" >
+        answer_c,
+      </if>
+      <if test="answerD != null" >
+        answer_d,
+      </if>
+      <if test="answerE != null" >
+        answer_e,
+      </if>
+      <if test="scoreA != null" >
+        score_a,
+      </if>
+      <if test="scoreB != null" >
+        score_b,
+      </if>
+      <if test="scoreC != null" >
+        score_c,
+      </if>
+      <if test="scoreD != null" >
+        score_d,
+      </if>
+      <if test="scoreE != null" >
+        score_e,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="answerA != null" >
+        #{answerA,jdbcType=VARCHAR},
+      </if>
+      <if test="answerB != null" >
+        #{answerB,jdbcType=VARCHAR},
+      </if>
+      <if test="answerC != null" >
+        #{answerC,jdbcType=VARCHAR},
+      </if>
+      <if test="answerD != null" >
+        #{answerD,jdbcType=VARCHAR},
+      </if>
+      <if test="answerE != null" >
+        #{answerE,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreA != null" >
+        #{scoreA,jdbcType=INTEGER},
+      </if>
+      <if test="scoreB != null" >
+        #{scoreB,jdbcType=INTEGER},
+      </if>
+      <if test="scoreC != null" >
+        #{scoreC,jdbcType=INTEGER},
+      </if>
+      <if test="scoreD != null" >
+        #{scoreD,jdbcType=INTEGER},
+      </if>
+      <if test="scoreE != null" >
+        #{scoreE,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.user.UserRiskAssessmentsExample" resultType="java.lang.Integer" >
+    select count(*) from user_risk_assessments
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_risk_assessments
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerA != null" >
+        answer_a = #{record.answerA,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerB != null" >
+        answer_b = #{record.answerB,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerC != null" >
+        answer_c = #{record.answerC,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerD != null" >
+        answer_d = #{record.answerD,jdbcType=VARCHAR},
+      </if>
+      <if test="record.answerE != null" >
+        answer_e = #{record.answerE,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scoreA != null" >
+        score_a = #{record.scoreA,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreB != null" >
+        score_b = #{record.scoreB,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreC != null" >
+        score_c = #{record.scoreC,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreD != null" >
+        score_d = #{record.scoreD,jdbcType=INTEGER},
+      </if>
+      <if test="record.scoreE != null" >
+        score_e = #{record.scoreE,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_risk_assessments
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      answer_a = #{record.answerA,jdbcType=VARCHAR},
+      answer_b = #{record.answerB,jdbcType=VARCHAR},
+      answer_c = #{record.answerC,jdbcType=VARCHAR},
+      answer_d = #{record.answerD,jdbcType=VARCHAR},
+      answer_e = #{record.answerE,jdbcType=VARCHAR},
+      score_a = #{record.scoreA,jdbcType=INTEGER},
+      score_b = #{record.scoreB,jdbcType=INTEGER},
+      score_c = #{record.scoreC,jdbcType=INTEGER},
+      score_d = #{record.scoreD,jdbcType=INTEGER},
+      score_e = #{record.scoreE,jdbcType=INTEGER},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.user.UserRiskAssessments" >
+    update user_risk_assessments
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="answerA != null" >
+        answer_a = #{answerA,jdbcType=VARCHAR},
+      </if>
+      <if test="answerB != null" >
+        answer_b = #{answerB,jdbcType=VARCHAR},
+      </if>
+      <if test="answerC != null" >
+        answer_c = #{answerC,jdbcType=VARCHAR},
+      </if>
+      <if test="answerD != null" >
+        answer_d = #{answerD,jdbcType=VARCHAR},
+      </if>
+      <if test="answerE != null" >
+        answer_e = #{answerE,jdbcType=VARCHAR},
+      </if>
+      <if test="scoreA != null" >
+        score_a = #{scoreA,jdbcType=INTEGER},
+      </if>
+      <if test="scoreB != null" >
+        score_b = #{scoreB,jdbcType=INTEGER},
+      </if>
+      <if test="scoreC != null" >
+        score_c = #{scoreC,jdbcType=INTEGER},
+      </if>
+      <if test="scoreD != null" >
+        score_d = #{scoreD,jdbcType=INTEGER},
+      </if>
+      <if test="scoreE != null" >
+        score_e = #{scoreE,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.user.UserRiskAssessments" >
+    update user_risk_assessments
+    set title = #{title,jdbcType=VARCHAR},
+      answer_a = #{answerA,jdbcType=VARCHAR},
+      answer_b = #{answerB,jdbcType=VARCHAR},
+      answer_c = #{answerC,jdbcType=VARCHAR},
+      answer_d = #{answerD,jdbcType=VARCHAR},
+      answer_e = #{answerE,jdbcType=VARCHAR},
+      score_a = #{scoreA,jdbcType=INTEGER},
+      score_b = #{scoreB,jdbcType=INTEGER},
+      score_c = #{scoreC,jdbcType=INTEGER},
+      score_d = #{scoreD,jdbcType=INTEGER},
+      score_e = #{scoreE,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

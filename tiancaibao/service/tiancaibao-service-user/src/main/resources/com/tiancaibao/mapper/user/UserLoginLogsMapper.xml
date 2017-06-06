@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.user.UserLoginLogsMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.user.UserLoginLogs" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="system" property="system" jdbcType="VARCHAR" />
+    <result column="agent_num" property="agentNum" jdbcType="VARCHAR" />
+    <result column="remember_token" property="rememberToken" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, user_id, source, system, agent_num, remember_token, created_at, updated_at, deleted_at
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.user.UserLoginLogsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_login_logs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id,user_id,source,system,agent_num,remember_token,created_at,updated_at,deleted_at
+    from user_login_logs
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from user_login_logs
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.user.UserLoginLogsExample" >
+    delete from user_login_logs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserLoginLogs" >
+    insert into user_login_logs (id, user_id, source, 
+      system, agent_num, remember_token, 
+      created_at, updated_at, deleted_at
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{source,jdbcType=VARCHAR}, 
+      #{system,jdbcType=VARCHAR}, #{agentNum,jdbcType=VARCHAR}, #{rememberToken,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.user.UserLoginLogs" >
+    insert into user_login_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="system != null" >
+        system,
+      </if>
+      <if test="agentNum != null" >
+        agent_num,
+      </if>
+      <if test="rememberToken != null" >
+        remember_token,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNum != null" >
+        #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rememberToken != null" >
+        #{rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.user.UserLoginLogsExample" resultType="java.lang.Integer" >
+    select count(*) from user_login_logs
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_login_logs
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.system != null" >
+        system = #{record.system,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentNum != null" >
+        agent_num = #{record.agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rememberToken != null" >
+        remember_token = #{record.rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_login_logs
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      source = #{record.source,jdbcType=VARCHAR},
+      system = #{record.system,jdbcType=VARCHAR},
+      agent_num = #{record.agentNum,jdbcType=VARCHAR},
+      remember_token = #{record.rememberToken,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.user.UserLoginLogs" >
+    update user_login_logs
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="system != null" >
+        system = #{system,jdbcType=VARCHAR},
+      </if>
+      <if test="agentNum != null" >
+        agent_num = #{agentNum,jdbcType=VARCHAR},
+      </if>
+      <if test="rememberToken != null" >
+        remember_token = #{rememberToken,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.user.UserLoginLogs" >
+    update user_login_logs
+    set user_id = #{userId,jdbcType=BIGINT},
+      source = #{source,jdbcType=VARCHAR},
+      system = #{system,jdbcType=VARCHAR},
+      agent_num = #{agentNum,jdbcType=VARCHAR},
+      remember_token = #{rememberToken,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

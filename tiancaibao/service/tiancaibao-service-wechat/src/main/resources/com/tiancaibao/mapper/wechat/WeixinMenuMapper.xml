@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.wechat.WeixinMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.wechat.WeixinMenu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="menuname" property="menuname" jdbcType="VARCHAR" />
+    <result column="isson_menu" property="issonMenu" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="BIGINT" />
+    <result column="menu_weigh" property="menuWeigh" jdbcType="BIGINT" />
+    <result column="sonmenu_url" property="sonmenuUrl" jdbcType="VARCHAR" />
+    <result column="sonmenu_type" property="sonmenuType" jdbcType="CHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, menuname, isson_menu, parent_id, menu_weigh, sonmenu_url, sonmenu_type, created_at, 
+      updated_at, deleted_at
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.wechat.WeixinMenuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from weixinmenu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    id,menuname,isson_menu,parent_id,menu_weigh,sonmenu_url,sonmenu_type,created_at,updated_at,deleted_at
+    from weixinmenu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from weixinmenu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.wechat.WeixinMenuExample" >
+    delete from weixinmenu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.wechat.WeixinMenu" >
+    insert into weixinmenu (id, menuname, isson_menu, 
+      parent_id, menu_weigh, sonmenu_url, 
+      sonmenu_type, created_at, updated_at, 
+      deleted_at)
+    values (#{id,jdbcType=INTEGER}, #{menuname,jdbcType=VARCHAR}, #{issonMenu,jdbcType=VARCHAR}, 
+      #{parentId,jdbcType=BIGINT}, #{menuWeigh,jdbcType=BIGINT}, #{sonmenuUrl,jdbcType=VARCHAR}, 
+      #{sonmenuType,jdbcType=CHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.wechat.WeixinMenu" >
+    insert into weixinmenu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="menuname != null" >
+        menuname,
+      </if>
+      <if test="issonMenu != null" >
+        isson_menu,
+      </if>
+      <if test="parentId != null" >
+        parent_id,
+      </if>
+      <if test="menuWeigh != null" >
+        menu_weigh,
+      </if>
+      <if test="sonmenuUrl != null" >
+        sonmenu_url,
+      </if>
+      <if test="sonmenuType != null" >
+        sonmenu_type,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="menuname != null" >
+        #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="issonMenu != null" >
+        #{issonMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="menuWeigh != null" >
+        #{menuWeigh,jdbcType=BIGINT},
+      </if>
+      <if test="sonmenuUrl != null" >
+        #{sonmenuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sonmenuType != null" >
+        #{sonmenuType,jdbcType=CHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.wechat.WeixinMenuExample" resultType="java.lang.Integer" >
+    select count(*) from weixinmenu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update weixinmenu
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.menuname != null" >
+        menuname = #{record.menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issonMenu != null" >
+        isson_menu = #{record.issonMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="record.parentId != null" >
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuWeigh != null" >
+        menu_weigh = #{record.menuWeigh,jdbcType=BIGINT},
+      </if>
+      <if test="record.sonmenuUrl != null" >
+        sonmenu_url = #{record.sonmenuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sonmenuType != null" >
+        sonmenu_type = #{record.sonmenuType,jdbcType=CHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update weixinmenu
+    set id = #{record.id,jdbcType=INTEGER},
+      menuname = #{record.menuname,jdbcType=VARCHAR},
+      isson_menu = #{record.issonMenu,jdbcType=VARCHAR},
+      parent_id = #{record.parentId,jdbcType=BIGINT},
+      menu_weigh = #{record.menuWeigh,jdbcType=BIGINT},
+      sonmenu_url = #{record.sonmenuUrl,jdbcType=VARCHAR},
+      sonmenu_type = #{record.sonmenuType,jdbcType=CHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.wechat.WeixinMenu" >
+    update weixinmenu
+    <set >
+      <if test="menuname != null" >
+        menuname = #{menuname,jdbcType=VARCHAR},
+      </if>
+      <if test="issonMenu != null" >
+        isson_menu = #{issonMenu,jdbcType=VARCHAR},
+      </if>
+      <if test="parentId != null" >
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="menuWeigh != null" >
+        menu_weigh = #{menuWeigh,jdbcType=BIGINT},
+      </if>
+      <if test="sonmenuUrl != null" >
+        sonmenu_url = #{sonmenuUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="sonmenuType != null" >
+        sonmenu_type = #{sonmenuType,jdbcType=CHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.wechat.WeixinMenu" >
+    update weixinmenu
+    set menuname = #{menuname,jdbcType=VARCHAR},
+      isson_menu = #{issonMenu,jdbcType=VARCHAR},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      menu_weigh = #{menuWeigh,jdbcType=BIGINT},
+      sonmenu_url = #{sonmenuUrl,jdbcType=VARCHAR},
+      sonmenu_type = #{sonmenuType,jdbcType=CHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
