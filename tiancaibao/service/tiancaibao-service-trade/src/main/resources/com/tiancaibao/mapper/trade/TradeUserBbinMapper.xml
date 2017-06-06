@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.trade.TradeUserBbinMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.trade.TradeUserBbin" >
+    <id column="id" property="id" jdbcType="SMALLINT" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="bbin_amount" property="bbinAmount" jdbcType="SMALLINT" />
+    <result column="amount" property="amount" jdbcType="SMALLINT" />
+    <result column="type" property="type" jdbcType="TINYINT" />
+    <result column="use_bbin_at" property="useBbinAt" jdbcType="TIMESTAMP" />
+    <result column="redeem_at" property="redeemAt" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, user_id, bbin_amount, amount, type, use_bbin_at, redeem_at, created_at, updated_at, 
+      deleted_at
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.trade.TradeUserBbinExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_bbin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Short" >
+    select 
+    id,user_id,bbin_amount,amount,type,use_bbin_at,redeem_at,created_at,updated_at,deleted_at
+    from user_bbin
+    where id = #{id,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short" >
+    delete from user_bbin
+    where id = #{id,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.trade.TradeUserBbinExample" >
+    delete from user_bbin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TradeUserBbin" >
+    insert into user_bbin (id, user_id, bbin_amount, 
+      amount, type, use_bbin_at, 
+      redeem_at, created_at, updated_at, 
+      deleted_at)
+    values (#{id,jdbcType=SMALLINT}, #{userId,jdbcType=INTEGER}, #{bbinAmount,jdbcType=SMALLINT}, 
+      #{amount,jdbcType=SMALLINT}, #{type,jdbcType=TINYINT}, #{useBbinAt,jdbcType=TIMESTAMP}, 
+      #{redeemAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TradeUserBbin" >
+    insert into user_bbin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="bbinAmount != null" >
+        bbin_amount,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="useBbinAt != null" >
+        use_bbin_at,
+      </if>
+      <if test="redeemAt != null" >
+        redeem_at,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=SMALLINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bbinAmount != null" >
+        #{bbinAmount,jdbcType=SMALLINT},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="useBbinAt != null" >
+        #{useBbinAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemAt != null" >
+        #{redeemAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.trade.TradeUserBbinExample" resultType="java.lang.Integer" >
+    select count(*) from user_bbin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_bbin
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=SMALLINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bbinAmount != null" >
+        bbin_amount = #{record.bbinAmount,jdbcType=SMALLINT},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=SMALLINT},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.useBbinAt != null" >
+        use_bbin_at = #{record.useBbinAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.redeemAt != null" >
+        redeem_at = #{record.redeemAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_bbin
+    set id = #{record.id,jdbcType=SMALLINT},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      bbin_amount = #{record.bbinAmount,jdbcType=SMALLINT},
+      amount = #{record.amount,jdbcType=SMALLINT},
+      type = #{record.type,jdbcType=TINYINT},
+      use_bbin_at = #{record.useBbinAt,jdbcType=TIMESTAMP},
+      redeem_at = #{record.redeemAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.trade.TradeUserBbin" >
+    update user_bbin
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="bbinAmount != null" >
+        bbin_amount = #{bbinAmount,jdbcType=SMALLINT},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=SMALLINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="useBbinAt != null" >
+        use_bbin_at = #{useBbinAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="redeemAt != null" >
+        redeem_at = #{redeemAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.trade.TradeUserBbin" >
+    update user_bbin
+    set user_id = #{userId,jdbcType=INTEGER},
+      bbin_amount = #{bbinAmount,jdbcType=SMALLINT},
+      amount = #{amount,jdbcType=SMALLINT},
+      type = #{type,jdbcType=TINYINT},
+      use_bbin_at = #{useBbinAt,jdbcType=TIMESTAMP},
+      redeem_at = #{redeemAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=SMALLINT}
+  </update>
+</mapper>

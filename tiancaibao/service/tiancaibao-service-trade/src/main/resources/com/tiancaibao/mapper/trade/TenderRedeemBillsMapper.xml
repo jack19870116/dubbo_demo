@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiancaibao.mapper.trade.TenderRepaymentBillsMapper">
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.trade.TenderRepaymentBills">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="client" jdbcType="VARCHAR" property="client" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="amount" jdbcType="BIGINT" property="amount" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="yborderid" jdbcType="VARCHAR" property="yborderid" />
+    <result column="confirmed_at" jdbcType="TIMESTAMP" property="confirmedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="days" jdbcType="BIGINT" property="days" />
+    <result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="ip_info" jdbcType="VARCHAR" property="ipInfo" />
+    <result column="reinvest" jdbcType="INTEGER" property="reinvest" />
+    <result column="project_id" jdbcType="VARCHAR" property="projectId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, client, user_id, amount, status, yborderid, confirmed_at, created_at, updated_at, 
+    deleted_at, days, order_code, ip, ip_info, reinvest, project_id
+  </sql>
+  <select id="selectByExample" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBillsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tender_redeem_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tender_redeem_bills
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tender_redeem_bills
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBillsExample">
+    delete from tender_redeem_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBills">
+    insert into tender_redeem_bills (id, client, user_id, 
+      amount, status, yborderid, 
+      confirmed_at, created_at, updated_at, 
+      deleted_at, days, order_code, 
+      ip, ip_info, reinvest, 
+      project_id)
+    values (#{id,jdbcType=BIGINT}, #{client,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT}, 
+      #{amount,jdbcType=BIGINT}, #{status,jdbcType=VARCHAR}, #{yborderid,jdbcType=VARCHAR}, 
+      #{confirmedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{days,jdbcType=BIGINT}, #{orderCode,jdbcType=VARCHAR}, 
+      #{ip,jdbcType=VARCHAR}, #{ipInfo,jdbcType=VARCHAR}, #{reinvest,jdbcType=INTEGER}, 
+      #{projectId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBills">
+    insert into tender_redeem_bills
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="client != null">
+        client,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="yborderid != null">
+        yborderid,
+      </if>
+      <if test="confirmedAt != null">
+        confirmed_at,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="days != null">
+        days,
+      </if>
+      <if test="orderCode != null">
+        order_code,
+      </if>
+      <if test="ip != null">
+        ip,
+      </if>
+      <if test="ipInfo != null">
+        ip_info,
+      </if>
+      <if test="reinvest != null">
+        reinvest,
+      </if>
+      <if test="projectId != null">
+        project_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="client != null">
+        #{client,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yborderid != null">
+        #{yborderid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmedAt != null">
+        #{confirmedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null">
+        #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="ipInfo != null">
+        #{ipInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reinvest != null">
+        #{reinvest,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null">
+        #{projectId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBillsExample" resultType="java.lang.Long">
+    select count(*) from tender_redeem_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update tender_redeem_bills
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.client != null">
+        client = #{record.client,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=BIGINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yborderid != null">
+        yborderid = #{record.yborderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.confirmedAt != null">
+        confirmed_at = #{record.confirmedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null">
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.days != null">
+        days = #{record.days,jdbcType=BIGINT},
+      </if>
+      <if test="record.orderCode != null">
+        order_code = #{record.orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null">
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipInfo != null">
+        ip_info = #{record.ipInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reinvest != null">
+        reinvest = #{record.reinvest,jdbcType=INTEGER},
+      </if>
+      <if test="record.projectId != null">
+        project_id = #{record.projectId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update tender_redeem_bills
+    set id = #{record.id,jdbcType=BIGINT},
+      client = #{record.client,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      amount = #{record.amount,jdbcType=BIGINT},
+      status = #{record.status,jdbcType=VARCHAR},
+      yborderid = #{record.yborderid,jdbcType=VARCHAR},
+      confirmed_at = #{record.confirmedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      days = #{record.days,jdbcType=BIGINT},
+      order_code = #{record.orderCode,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      ip_info = #{record.ipInfo,jdbcType=VARCHAR},
+      reinvest = #{record.reinvest,jdbcType=INTEGER},
+      project_id = #{record.projectId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBills">
+    update tender_redeem_bills
+    <set>
+      <if test="client != null">
+        client = #{client,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="yborderid != null">
+        yborderid = #{yborderid,jdbcType=VARCHAR},
+      </if>
+      <if test="confirmedAt != null">
+        confirmed_at = #{confirmedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="days != null">
+        days = #{days,jdbcType=BIGINT},
+      </if>
+      <if test="orderCode != null">
+        order_code = #{orderCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null">
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="ipInfo != null">
+        ip_info = #{ipInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="reinvest != null">
+        reinvest = #{reinvest,jdbcType=INTEGER},
+      </if>
+      <if test="projectId != null">
+        project_id = #{projectId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.trade.TenderRepaymentBills">
+    update tender_redeem_bills
+    set client = #{client,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=BIGINT},
+      amount = #{amount,jdbcType=BIGINT},
+      status = #{status,jdbcType=VARCHAR},
+      yborderid = #{yborderid,jdbcType=VARCHAR},
+      confirmed_at = #{confirmedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      days = #{days,jdbcType=BIGINT},
+      order_code = #{orderCode,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      ip_info = #{ipInfo,jdbcType=VARCHAR},
+      reinvest = #{reinvest,jdbcType=INTEGER},
+      project_id = #{projectId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiancaibao.mapper.trade.TradeInvestRecordsMapper">
+	<resultMap id="BaseResultMap" type="com.tiancaibao.pojo.trade.TradeInvestRecords">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="invited_by_user_id" jdbcType="BIGINT" property="invitedByUserId" />
+		<result column="user_id" jdbcType="BIGINT" property="userId" />
+		<result column="invest_bill_id" jdbcType="BIGINT" property="investBillId" />
+		<result column="amount" jdbcType="BIGINT" property="amount" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+		<result column="days" jdbcType="INTEGER" property="days" />
+		<result column="rate" jdbcType="BIGINT" property="rate" />
+		<result column="expire_date" jdbcType="DATE" property="expireDate" />
+		<result column="interest" jdbcType="BIGINT" property="interest" />
+		<result column="product_sign" jdbcType="VARCHAR" property="productSign" />
+		<result column="status" jdbcType="CHAR" property="status" />
+		<result column="coupon_id" jdbcType="INTEGER" property="couponId" />
+		<result column="interest_id" jdbcType="INTEGER" property="interestId" />
+		<result column="order_code" jdbcType="VARCHAR" property="orderCode" />
+		<result column="contracts_code" jdbcType="CHAR" property="contractsCode" />
+		<result column="is_auto_invest" jdbcType="TINYINT" property="isAutoInvest" />
+		<result column="ip" jdbcType="VARCHAR" property="ip" />
+		<result column="reinvest" jdbcType="INTEGER" property="reinvest" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		<if test="fields == null">
+			id, invited_by_user_id, user_id, invest_bill_id, amount, created_at,
+			updated_at,
+			deleted_at, days, rate, expire_date, interest, product_sign, status, coupon_id,
+			interest_id,
+			order_code, contracts_code, is_auto_invest, ip, reinvest
+		</if>
+		<if test="fields != null">
+			${fields}
+		</if>
+	</sql>
+	<select id="selectByExample" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecordsExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from trade_invest_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null">
+			limit #{startRow} , #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from trade_invest_records
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from trade_invest_records
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecordsExample">
+		delete from trade_invest_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" keyProperty="id"
+		parameterType="com.tiancaibao.pojo.trade.TradeInvestRecords"
+		useGeneratedKeys="true">
+		insert into trade_invest_records (id, invited_by_user_id, user_id,
+		invest_bill_id, amount, created_at,
+		updated_at, deleted_at, days,
+		rate, expire_date, interest,
+		product_sign, status, coupon_id,
+		interest_id, order_code, contracts_code,
+		is_auto_invest, ip, reinvest
+		)
+		values (#{id,jdbcType=BIGINT}, #{invitedByUserId,jdbcType=BIGINT},
+		#{userId,jdbcType=BIGINT},
+		#{investBillId,jdbcType=BIGINT}, #{amount,jdbcType=BIGINT}, #{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP},
+		#{days,jdbcType=INTEGER},
+		#{rate,jdbcType=BIGINT}, #{expireDate,jdbcType=DATE}, #{interest,jdbcType=BIGINT},
+		#{productSign,jdbcType=VARCHAR}, #{status,jdbcType=CHAR},
+		#{couponId,jdbcType=INTEGER},
+		#{interestId,jdbcType=INTEGER}, #{orderCode,jdbcType=VARCHAR}, #{contractsCode,jdbcType=CHAR},
+		#{isAutoInvest,jdbcType=TINYINT}, #{ip,jdbcType=VARCHAR},
+		#{reinvest,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" keyProperty="id"
+		parameterType="com.tiancaibao.pojo.trade.TradeInvestRecords"
+		useGeneratedKeys="true">
+		insert into trade_invest_records
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="invitedByUserId != null">
+				invited_by_user_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="investBillId != null">
+				invest_bill_id,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="days != null">
+				days,
+			</if>
+			<if test="rate != null">
+				rate,
+			</if>
+			<if test="expireDate != null">
+				expire_date,
+			</if>
+			<if test="interest != null">
+				interest,
+			</if>
+			<if test="productSign != null">
+				product_sign,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="couponId != null">
+				coupon_id,
+			</if>
+			<if test="interestId != null">
+				interest_id,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="contractsCode != null">
+				contracts_code,
+			</if>
+			<if test="isAutoInvest != null">
+				is_auto_invest,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="reinvest != null">
+				reinvest,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="invitedByUserId != null">
+				#{invitedByUserId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="investBillId != null">
+				#{investBillId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=BIGINT},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="days != null">
+				#{days,jdbcType=INTEGER},
+			</if>
+			<if test="rate != null">
+				#{rate,jdbcType=BIGINT},
+			</if>
+			<if test="expireDate != null">
+				#{expireDate,jdbcType=DATE},
+			</if>
+			<if test="interest != null">
+				#{interest,jdbcType=BIGINT},
+			</if>
+			<if test="productSign != null">
+				#{productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="couponId != null">
+				#{couponId,jdbcType=INTEGER},
+			</if>
+			<if test="interestId != null">
+				#{interestId,jdbcType=INTEGER},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="contractsCode != null">
+				#{contractsCode,jdbcType=CHAR},
+			</if>
+			<if test="isAutoInvest != null">
+				#{isAutoInvest,jdbcType=TINYINT},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="reinvest != null">
+				#{reinvest,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecordsExample"
+		resultType="java.lang.Long">
+		select count(*) from trade_invest_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update trade_invest_records
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.invitedByUserId != null">
+				invited_by_user_id = #{record.invitedByUserId,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.investBillId != null">
+				invest_bill_id = #{record.investBillId,jdbcType=BIGINT},
+			</if>
+			<if test="record.amount != null">
+				amount = #{record.amount,jdbcType=BIGINT},
+			</if>
+			<if test="record.createdAt != null">
+				created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatedAt != null">
+				updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.deletedAt != null">
+				deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.days != null">
+				days = #{record.days,jdbcType=INTEGER},
+			</if>
+			<if test="record.rate != null">
+				rate = #{record.rate,jdbcType=BIGINT},
+			</if>
+			<if test="record.expireDate != null">
+				expire_date = #{record.expireDate,jdbcType=DATE},
+			</if>
+			<if test="record.interest != null">
+				interest = #{record.interest,jdbcType=BIGINT},
+			</if>
+			<if test="record.productSign != null">
+				product_sign = #{record.productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=CHAR},
+			</if>
+			<if test="record.couponId != null">
+				coupon_id = #{record.couponId,jdbcType=INTEGER},
+			</if>
+			<if test="record.interestId != null">
+				interest_id = #{record.interestId,jdbcType=INTEGER},
+			</if>
+			<if test="record.orderCode != null">
+				order_code = #{record.orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contractsCode != null">
+				contracts_code = #{record.contractsCode,jdbcType=CHAR},
+			</if>
+			<if test="record.isAutoInvest != null">
+				is_auto_invest = #{record.isAutoInvest,jdbcType=TINYINT},
+			</if>
+			<if test="record.ip != null">
+				ip = #{record.ip,jdbcType=VARCHAR},
+			</if>
+			<if test="record.reinvest != null">
+				reinvest = #{record.reinvest,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update trade_invest_records
+		set id = #{record.id,jdbcType=BIGINT},
+		invited_by_user_id = #{record.invitedByUserId,jdbcType=BIGINT},
+		user_id = #{record.userId,jdbcType=BIGINT},
+		invest_bill_id = #{record.investBillId,jdbcType=BIGINT},
+		amount = #{record.amount,jdbcType=BIGINT},
+		created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+		deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+		days = #{record.days,jdbcType=INTEGER},
+		rate = #{record.rate,jdbcType=BIGINT},
+		expire_date = #{record.expireDate,jdbcType=DATE},
+		interest = #{record.interest,jdbcType=BIGINT},
+		product_sign = #{record.productSign,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=CHAR},
+		coupon_id = #{record.couponId,jdbcType=INTEGER},
+		interest_id = #{record.interestId,jdbcType=INTEGER},
+		order_code = #{record.orderCode,jdbcType=VARCHAR},
+		contracts_code = #{record.contractsCode,jdbcType=CHAR},
+		is_auto_invest = #{record.isAutoInvest,jdbcType=TINYINT},
+		ip = #{record.ip,jdbcType=VARCHAR},
+		reinvest = #{record.reinvest,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecords">
+		update trade_invest_records
+		<set>
+			<if test="invitedByUserId != null">
+				invited_by_user_id = #{invitedByUserId,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="investBillId != null">
+				invest_bill_id = #{investBillId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=BIGINT},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="days != null">
+				days = #{days,jdbcType=INTEGER},
+			</if>
+			<if test="rate != null">
+				rate = #{rate,jdbcType=BIGINT},
+			</if>
+			<if test="expireDate != null">
+				expire_date = #{expireDate,jdbcType=DATE},
+			</if>
+			<if test="interest != null">
+				interest = #{interest,jdbcType=BIGINT},
+			</if>
+			<if test="productSign != null">
+				product_sign = #{productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="couponId != null">
+				coupon_id = #{couponId,jdbcType=INTEGER},
+			</if>
+			<if test="interestId != null">
+				interest_id = #{interestId,jdbcType=INTEGER},
+			</if>
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="contractsCode != null">
+				contracts_code = #{contractsCode,jdbcType=CHAR},
+			</if>
+			<if test="isAutoInvest != null">
+				is_auto_invest = #{isAutoInvest,jdbcType=TINYINT},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="reinvest != null">
+				reinvest = #{reinvest,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecords">
+		update trade_invest_records
+		set invited_by_user_id = #{invitedByUserId,jdbcType=BIGINT},
+		user_id = #{userId,jdbcType=BIGINT},
+		invest_bill_id = #{investBillId,jdbcType=BIGINT},
+		amount = #{amount,jdbcType=BIGINT},
+		created_at = #{createdAt,jdbcType=TIMESTAMP},
+		updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+		deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		days = #{days,jdbcType=INTEGER},
+		rate = #{rate,jdbcType=BIGINT},
+		expire_date = #{expireDate,jdbcType=DATE},
+		interest = #{interest,jdbcType=BIGINT},
+		product_sign = #{productSign,jdbcType=VARCHAR},
+		status = #{status,jdbcType=CHAR},
+		coupon_id = #{couponId,jdbcType=INTEGER},
+		interest_id = #{interestId,jdbcType=INTEGER},
+		order_code = #{orderCode,jdbcType=VARCHAR},
+		contracts_code = #{contractsCode,jdbcType=CHAR},
+		is_auto_invest = #{isAutoInvest,jdbcType=TINYINT},
+		ip = #{ip,jdbcType=VARCHAR},
+		reinvest = #{reinvest,jdbcType=INTEGER}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- ===================================自定义========================================= -->
+	<select id="selectSumInterestByUserIdAndStatusAndDaysGreaterThan"
+		resultType="long">
+		SELECT IFNULL(SUM(interest),0) FROM trade_invest_records
+		WHERE
+		user_id
+		=#{userid} AND STATUS = #{status}
+		AND days > #{days}
+	</select>
+	<select id="selectSumAmountByUserIdAndCreatedAtBetweenNow"
+		resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM redeem_records WHERE
+		user_id =
+		#{userid} AND
+		created_at BETWEEN #{startdate} AND NOW()
+	</select>
+	<select id="selectSumAmountInvestRecordByProductSign"
+		parameterType="string" resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM
+		trade_invest_records WHERE product_sign=#{product_sign}
+	</select>
+	<select id="selectSumInterestFix" resultType="long">
+		SELECT
+		IFNULL(SUM(interest),0) FROM trade_invest_records WHERE days != 1
+	</select>
+	<select id="selectSumAmountInvestRecord" resultType="long">
+		SELECT
+		IFNULL(SUM(amount),0) FROM trade_invest_records
+	</select>
+	<select id="selectFinishFixSumInterestByUserId" resultType="long">
+		SELECT IFNULL(SUM(interest),0) FROM trade_invest_records WHERE user_id
+		=
+		#{userid} AND
+		days !=1
+		 <![CDATA[ AND expire_date <= NOW()]]>
+	</select>
+	<select id="selectCurrentSumAmountNotWithDraw" resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_invest_records WHERE
+		user_id=#{userId} AND days = 1 AND created_at  <![CDATA[>]]>
+		#{time}
+	</select>
+	<select id="selectSumAmountByUserId" resultType="java.lang.Long"
+		parameterType="java.lang.Long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_invest_records WHERE
+		user_id=#{userId} AND days = 1 AND created_at  <![CDATA[>]]>
+		#{time}
+	</select>
+	<select id="selectFixedIncomeByUserId" resultType="java.lang.Long"
+		parameterType="java.lang.Long">
+		SELECT IFNULL(SUM(interest),0) FROM
+		trade_invest_records WHERE
+		user_id=#{userId} AND status='DONE'
+	</select>
+
+	<select id="selectSumAmountByUserIdAndCreatedAt" resultType="java.lang.Long"
+		parameterType="java.lang.Long">
+		SELECT IFNULL(SUM(amount),0) FROM
+		trade_invest_records WHERE
+		user_id=#{userId} and created_at BETWEEN
+		'2016-01-07 00:00:00' AND NOW()
+	</select>
+	<select id="selectSumAmountInvestRecordByrecord" parameterType="com.tiancaibao.pojo.trade.TradeInvestRecordsExample"
+		resultType="java.lang.Long">
+		select
+		IFNULL(SUM(amount),0)
+		from trade_invest_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+
+</mapper>

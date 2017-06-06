@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.trade.TradeRedeemRecordsMapper">
+	<resultMap id="BaseResultMap" type="com.tiancaibao.pojo.trade.TradeRedeemRecords">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="amount" property="amount" jdbcType="BIGINT" />
+		<result column="sina_order_id" property="sinaOrderId" jdbcType="CHAR" />
+		<result column="days" property="days" jdbcType="INTEGER" />
+		<result column="product_sign" property="productSign" jdbcType="VARCHAR" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="reinvest" property="reinvest" jdbcType="INTEGER" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		<if test="fields == null">
+			id, user_id, amount, sina_order_id, days, product_sign,
+			created_at,
+			updated_at, deleted_at,
+			status, order_code, ip, reinvest
+		</if>
+		<if test="fields != null">
+			${fields}
+		</if>
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecordsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from trade_redeem_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null">
+			limit #{startRow} , #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		id,user_id,amount,sina_order_id,days,product_sign,created_at,updated_at,deleted_at,status,order_code,ip,reinvest
+		from trade_redeem_records
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		trade_redeem_records
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecordsExample">
+		delete from trade_redeem_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecords">
+		insert into trade_redeem_records (id, user_id, amount,
+		sina_order_id, days, product_sign,
+		created_at, updated_at, deleted_at,
+		status, order_code, ip,
+		reinvest)
+		values (#{id,jdbcType=INTEGER},
+		#{userId,jdbcType=BIGINT},
+		#{amount,jdbcType=BIGINT},
+		#{sinaOrderId,jdbcType=CHAR}, #{days,jdbcType=INTEGER},
+		#{productSign,jdbcType=VARCHAR},
+		#{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP},
+		#{deletedAt,jdbcType=TIMESTAMP},
+		#{status,jdbcType=CHAR}, #{orderCode,jdbcType=VARCHAR},
+		#{ip,jdbcType=VARCHAR},
+		#{reinvest,jdbcType=INTEGER})
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecords">
+		insert into trade_redeem_records
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="sinaOrderId != null">
+				sina_order_id,
+			</if>
+			<if test="days != null">
+				days,
+			</if>
+			<if test="productSign != null">
+				product_sign,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="reinvest != null">
+				reinvest,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=BIGINT},
+			</if>
+			<if test="sinaOrderId != null">
+				#{sinaOrderId,jdbcType=CHAR},
+			</if>
+			<if test="days != null">
+				#{days,jdbcType=INTEGER},
+			</if>
+			<if test="productSign != null">
+				#{productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="reinvest != null">
+				#{reinvest,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecordsExample"
+		resultType="java.lang.Integer">
+		select count(*) from trade_redeem_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update trade_redeem_records
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.amount != null">
+				amount = #{record.amount,jdbcType=BIGINT},
+			</if>
+			<if test="record.sinaOrderId != null">
+				sina_order_id = #{record.sinaOrderId,jdbcType=CHAR},
+			</if>
+			<if test="record.days != null">
+				days = #{record.days,jdbcType=INTEGER},
+			</if>
+			<if test="record.productSign != null">
+				product_sign = #{record.productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createdAt != null">
+				created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatedAt != null">
+				updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.deletedAt != null">
+				deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=CHAR},
+			</if>
+			<if test="record.orderCode != null">
+				order_code = #{record.orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.ip != null">
+				ip = #{record.ip,jdbcType=VARCHAR},
+			</if>
+			<if test="record.reinvest != null">
+				reinvest = #{record.reinvest,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update trade_redeem_records
+		set id = #{record.id,jdbcType=INTEGER},
+		user_id = #{record.userId,jdbcType=BIGINT},
+		amount =
+		#{record.amount,jdbcType=BIGINT},
+		sina_order_id =
+		#{record.sinaOrderId,jdbcType=CHAR},
+		days =
+		#{record.days,jdbcType=INTEGER},
+		product_sign =
+		#{record.productSign,jdbcType=VARCHAR},
+		created_at =
+		#{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{record.updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{record.deletedAt,jdbcType=TIMESTAMP},
+		status =
+		#{record.status,jdbcType=CHAR},
+		order_code =
+		#{record.orderCode,jdbcType=VARCHAR},
+		ip =
+		#{record.ip,jdbcType=VARCHAR},
+		reinvest =
+		#{record.reinvest,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecords">
+		update trade_redeem_records
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=BIGINT},
+			</if>
+			<if test="sinaOrderId != null">
+				sina_order_id = #{sinaOrderId,jdbcType=CHAR},
+			</if>
+			<if test="days != null">
+				days = #{days,jdbcType=INTEGER},
+			</if>
+			<if test="productSign != null">
+				product_sign = #{productSign,jdbcType=VARCHAR},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="reinvest != null">
+				reinvest = #{reinvest,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecords">
+		update
+		trade_redeem_records
+		set user_id = #{userId,jdbcType=BIGINT},
+		amount =
+		#{amount,jdbcType=BIGINT},
+		sina_order_id =
+		#{sinaOrderId,jdbcType=CHAR},
+		days = #{days,jdbcType=INTEGER},
+		product_sign = #{productSign,jdbcType=VARCHAR},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{deletedAt,jdbcType=TIMESTAMP},
+		status = #{status,jdbcType=CHAR},
+		order_code = #{orderCode,jdbcType=VARCHAR},
+		ip =
+		#{ip,jdbcType=VARCHAR},
+		reinvest = #{reinvest,jdbcType=INTEGER}
+		where id
+		= #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 自定义 -->
+	<select id="selectSumAmountByUserIdAndCreatedAtBetweenNow"
+		resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_redeem_records
+		WHERE user_id =
+		#{userid} AND
+		created_at BETWEEN #{startdate} AND NOW()
+	</select>
+	<select id="selectSumAmountOfRedeemRecordsByUserIdAndDaysAndCreateAtYM"
+		resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_redeem_records
+		WHERE user_id =
+		#{userid} AND
+		days =#{days} AND created_at like '${yM}%'
+	</select>
+	<select id="selectumAmountOfRedeemRecordsByUserId" resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_redeem_records WHERE user_id =
+		#{userid}
+	</select>
+	<select id="selectSameMonth" resultType="java.lang.Long"   parameterType="com.tiancaibao.pojo.trade.TradeRedeemRecordsExample">
+		SELECT IFNULL(SUM(amount),0) FROM trade_redeem_records 
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+</mapper>

@@ -1,0 +1,163 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 配置dubbo的服务提供方 -->
+
+	<!-- 指定服务方法的名称 -->
+	<dubbo:application name="service-trade" />
+
+	<!-- 配置dubbo直连 -->
+	<!-- <dubbo:registry address="N/A" /> -->
+	<!-- 配置注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+
+	<!-- 配置dubbo协议 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.tradeService.port}"
+		host="${dubbo.tradeService.host}" />
+
+	<!-- 将接口暴露到注册中心 -->
+
+
+	<dubbo:service ref="tradeRechargeService"
+		interface="com.tiancaibao.service.interfaces.trade.recharge.biz.ITradeRechargeService" />
+
+	<dubbo:service ref="callBackTradeRecharge"
+		interface="com.tiancaibao.service.interfaces.trade.recharge.biz.ICallBackTradeRecharge" />
+
+	<dubbo:service ref="callBackTradeWithdraw"
+		interface="com.tiancaibao.service.interfaces.trade.withdraw.biz.ICallBackTradeWithdraw" />
+
+	<dubbo:service ref="tradeWithdrawBizService"
+		interface="com.tiancaibao.service.interfaces.trade.withdraw.biz.ITradeWithdrawBizService" />
+		
+	<dubbo:service ref="tradeInvestCallBackService"
+		interface="com.tiancaibao.service.interfaces.trade.invest.biz.ITradeInvestCallBackService" />
+		
+	<dubbo:service ref="tradeInvestBizService"
+		interface="com.tiancaibao.service.interfaces.trade.invest.biz.ITradeInvestService" />
+	<!-- 交易投资暴露接口 -->
+	<!--投资成功接口 -->
+	<dubbo:service ref="tradeInvestRecordsService"
+		interface="com.tiancaibao.service.interfaces.trade.invest.ITradeInvestRecordsService" />
+	<!--单标赎回账单接口 -->
+
+	<dubbo:service ref="TenderRepaymentBillsService"
+		interface="com.tiancaibao.service.interfaces.trade.redeem.ITenderRepaymentBillsService" />
+	<!--单标赎回代收接口 -->
+	<dubbo:service ref="TenderRepaymentHostingCollectService"
+		interface="com.tiancaibao.service.interfaces.trade.redeem.ITenderRepaymentHostingCollectService" />
+	<!--单标赎回代付接口 -->
+	<dubbo:service ref="TenderRepaymentHostingPayService"
+		interface="com.tiancaibao.service.interfaces.trade.redeem.ITenderRepaymentHostingPayService" />
+	<!--单标赎回记录接口 -->
+	<dubbo:service ref="TenderRepaymentRecordsService"
+		interface="com.tiancaibao.service.interfaces.trade.redeem.ITenderRepaymentRecordsService" />
+	<!-- 加息类,红包/加息劵使用+现金券 -->
+	<!-- 依赖user服务 -->
+	<!--用户接口 -->
+	<dubbo:reference id="userService"
+		interface="com.tiancaibao.service.interfaces.user.IUserService" check="false" />
+	<!-- 依赖新浪服务 -->
+	<dubbo:reference id="paySinaPayService"
+		interface="com.tiancaibao.service.interfaces.pay.IPaySinaPayService"
+		check="false" />
+	<!-- 新浪本地接口 -->
+	<dubbo:reference id="sinaUserInfoService"
+		interface="com.tiancaibao.service.interfaces.pay.IPaySinaUserInfoService"
+		check="false" />
+	<dubbo:reference id="couponsCurrentCashBenefitsService"
+		interface="com.tiancaibao.service.interfaces.coupons.ICouponsCurrentCashBenefitsService"
+		check="false" />
+	<!-- 提现调用接口 -->
+	<dubbo:reference id="payBankLimitsService"
+		interface="com.tiancaibao.service.interfaces.pay.IPayBankLimitsService"
+		check="false" />
+	<dubbo:reference id="systemAmountLimitsService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemAmountLimitsService"
+		check="false" />
+	<dubbo:reference id="systemPayTimeLimitsService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemPayTimeLimitsService"
+		check="false" />
+	<dubbo:reference id="userBlackListService"
+		interface="com.tiancaibao.service.interfaces.user.IUserBlackListService"
+		check="false" />
+	<dubbo:reference id="systemAssetIncreaseRecordsService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemAssetIncreaseRecordsService"
+		check="false" />
+	<!-- 队列服务 -->
+	<dubbo:reference id="mqMessageSender"
+		interface="com.tiancaibao.service.interfaces.mq.IMqMessageService"
+		check="false" />
+	<!-- 定期加息券接口 -->
+	<dubbo:reference id="couponsFixedInterestCouponsService"
+		interface="com.tiancaibao.service.interfaces.coupons.ICouponsFixedInterestCouponsService"
+		check="false" />
+	<!-- 定期红包接口 -->
+	<dubbo:reference id="couponsFixedCashCouponsService"
+		interface="com.tiancaibao.service.interfaces.coupons.ICouponsFixedCashCouponsService"
+		check="false" />
+	<!-- 单标项目接口 -->
+	<dubbo:reference id="systemTenderProductService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemTenderProductService"
+		check="false" />
+	<dubbo:reference id="integralSourcesService"
+		interface="com.tiancaibao.service.interfaces.integral.IIntegralSourcesService"
+		check="false" />
+
+	<dubbo:reference id="integralRecordsService"
+		interface="com.tiancaibao.service.interfaces.integral.IIntegralRecordsService"
+		check="false" />
+
+	<dubbo:reference id="userInviteLogsService"
+		interface="com.tiancaibao.service.interfaces.user.IUserInviteLogsService"
+		check="false" />
+
+	<dubbo:reference id="talentSourcesService"
+		interface="com.tiancaibao.service.interfaces.integral.ITalentSourcesService"
+		check="false" />
+	<dubbo:reference id="talentsService"
+		interface="com.tiancaibao.service.interfaces.talent.ITalentService"
+		check="false" />
+	<dubbo:reference id="sendSmsOnMqService"
+		interface="com.tiancaibao.service.interfaces.notice.biz.INoticeBizSendSMSOnMqService"
+		check="false" />
+	<dubbo:reference id="internalMessageService"
+		interface="com.tiancaibao.service.interfaces.notice.INoticeInternalMessageService"
+		check="false" />
+	<dubbo:reference id="systemService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemAssetsService"
+		check="false" />
+	<dubbo:reference id="systemAssetAddRecordsService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemAssetAddRecordsService"
+		check="false" />
+	<dubbo:reference id="couponsCurrentInterestservice"
+		interface="com.tiancaibao.service.interfaces.coupons.ICouponsCurrentInterestCouponsService"
+		check="false" />
+	<dubbo:reference id="noticeSendSMSServivce"
+		interface="com.tiancaibao.service.interfaces.notice.INoticeSendSMSService"
+		check="false" />
+
+
+
+
+	<!-- 配置dubbo全局超时时间 -->
+	<dubbo:consumer timeout="6000000" />
+	<dubbo:provider timeout="5000000" />
+</beans>

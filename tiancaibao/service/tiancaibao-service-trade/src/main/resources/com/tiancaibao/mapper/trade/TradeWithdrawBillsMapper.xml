@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.trade.TradeWithdrawBillsMapper">
+	<resultMap id="BaseResultMap" type="com.tiancaibao.pojo.trade.TradeWithdrawBills">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="amount" property="amount" jdbcType="BIGINT" />
+		<result column="status" property="status" jdbcType="CHAR" />
+		<result column="huifu_status" property="huifuStatus" jdbcType="VARCHAR" />
+		<result column="is_weekend" property="isWeekend" jdbcType="BIGINT" />
+		<result column="pay_fee" property="payFee" jdbcType="REAL" />
+		<result column="confirmed_at" property="confirmedAt" jdbcType="TIMESTAMP" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+		<result column="order_code" property="orderCode" jdbcType="VARCHAR" />
+		<result column="paytypeid" property="paytypeid" jdbcType="VARCHAR" />
+		<result column="days" property="days" jdbcType="BIGINT" />
+		<result column="ip" property="ip" jdbcType="VARCHAR" />
+		<result column="client" property="client" jdbcType="CHAR" />
+		<result column="current_cycle" property="currentCycle"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		<if test="fields == null">
+			id, user_id, amount, status, huifu_status,
+			is_weekend, pay_fee,
+			confirmed_at,
+			created_at, updated_at, deleted_at,
+			order_code, paytypeid, days, ip, client,
+			current_cycle
+		</if>
+		<if test="fields != null">
+			${fields}
+		</if>
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBillsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from trade_withdraw_bills
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null">
+			limit #{startRow} , #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		id,user_id,amount,status,huifu_status,is_weekend,pay_fee,confirmed_at,created_at,updated_at,deleted_at,order_code,paytypeid,days,ip,client,current_cycle
+		from trade_withdraw_bills
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		trade_withdraw_bills
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBillsExample">
+		delete from trade_withdraw_bills
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBills">
+		insert into trade_withdraw_bills
+		(id, user_id, amount,
+		status, huifu_status,
+		is_weekend, pay_fee,
+		confirmed_at,
+		created_at, updated_at, deleted_at,
+		order_code, paytypeid,
+		days,
+		ip, client, current_cycle
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{userId,jdbcType=BIGINT},
+		#{amount,jdbcType=BIGINT},
+		#{status,jdbcType=CHAR}, 
+		#{huifuStatus,jdbcType=VARCHAR},
+		#{isWeekend,jdbcType=BIGINT},
+		#{payFee,jdbcType=REAL},
+		#{confirmedAt,jdbcType=TIMESTAMP},
+		#{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+		#{deletedAt,jdbcType=TIMESTAMP},
+		#{orderCode,jdbcType=VARCHAR},
+		#{paytypeid,jdbcType=VARCHAR},
+		#{days,jdbcType=BIGINT},
+		#{ip,jdbcType=VARCHAR}, #{client,jdbcType=CHAR},
+		#{currentCycle,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBills">
+		insert into trade_withdraw_bills
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="huifuStatus != null">
+				huifu_status,
+			</if>
+			<if test="isWeekend != null">
+				is_weekend,
+			</if>
+			<if test="payFee != null">
+				pay_fee,
+			</if>
+			<if test="confirmedAt != null">
+				confirmed_at,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="paytypeid != null">
+				paytypeid,
+			</if>
+			<if test="days != null">
+				days,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="client != null">
+				client,
+			</if>
+			<if test="currentCycle != null">
+				current_cycle,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="huifuStatus != null">
+				#{huifuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="isWeekend != null">
+				#{isWeekend,jdbcType=BIGINT},
+			</if>
+			<if test="payFee != null">
+				#{payFee,jdbcType=REAL},
+			</if>
+			<if test="confirmedAt != null">
+				#{confirmedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="paytypeid != null">
+				#{paytypeid,jdbcType=VARCHAR},
+			</if>
+			<if test="days != null">
+				#{days,jdbcType=BIGINT},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="client != null">
+				#{client,jdbcType=CHAR},
+			</if>
+			<if test="currentCycle != null">
+				#{currentCycle,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBillsExample"
+		resultType="java.lang.Integer">
+		select count(*) from trade_withdraw_bills
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update trade_withdraw_bills
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.amount != null">
+				amount = #{record.amount,jdbcType=BIGINT},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=CHAR},
+			</if>
+			<if test="record.huifuStatus != null">
+				huifu_status = #{record.huifuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="record.isWeekend != null">
+				is_weekend = #{record.isWeekend,jdbcType=BIGINT},
+			</if>
+			<if test="record.payFee != null">
+				pay_fee = #{record.payFee,jdbcType=REAL},
+			</if>
+			<if test="record.confirmedAt != null">
+				confirmed_at = #{record.confirmedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.createdAt != null">
+				created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatedAt != null">
+				updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.deletedAt != null">
+				deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.orderCode != null">
+				order_code = #{record.orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paytypeid != null">
+				paytypeid = #{record.paytypeid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.days != null">
+				days = #{record.days,jdbcType=BIGINT},
+			</if>
+			<if test="record.ip != null">
+				ip = #{record.ip,jdbcType=VARCHAR},
+			</if>
+			<if test="record.client != null">
+				client = #{record.client,jdbcType=CHAR},
+			</if>
+			<if test="record.currentCycle != null">
+				current_cycle = #{record.currentCycle,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update trade_withdraw_bills
+		set id = #{record.id,jdbcType=BIGINT},
+		user_id =
+		#{record.userId,jdbcType=BIGINT},
+		amount =
+		#{record.amount,jdbcType=BIGINT},
+		status =
+		#{record.status,jdbcType=CHAR},
+		huifu_status = #{record.huifuStatus,jdbcType=VARCHAR},
+		is_weekend =
+		#{record.isWeekend,jdbcType=BIGINT},
+		pay_fee =
+		#{record.payFee,jdbcType=REAL},
+		confirmed_at =
+		#{record.confirmedAt,jdbcType=TIMESTAMP},
+		created_at =
+		#{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{record.updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{record.deletedAt,jdbcType=TIMESTAMP},
+		order_code =
+		#{record.orderCode,jdbcType=VARCHAR},
+		paytypeid =
+		#{record.paytypeid,jdbcType=VARCHAR},
+		days =
+		#{record.days,jdbcType=BIGINT},
+		ip = #{record.ip,jdbcType=VARCHAR},
+		client = #{record.client,jdbcType=CHAR},
+		current_cycle =
+		#{record.currentCycle,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBills">
+		update trade_withdraw_bills
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=CHAR},
+			</if>
+			<if test="huifuStatus != null">
+				huifu_status = #{huifuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="isWeekend != null">
+				is_weekend = #{isWeekend,jdbcType=BIGINT},
+			</if>
+			<if test="payFee != null">
+				pay_fee = #{payFee,jdbcType=REAL},
+			</if>
+			<if test="confirmedAt != null">
+				confirmed_at = #{confirmedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderCode != null">
+				order_code = #{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="paytypeid != null">
+				paytypeid = #{paytypeid,jdbcType=VARCHAR},
+			</if>
+			<if test="days != null">
+				days = #{days,jdbcType=BIGINT},
+			</if>
+			<if test="ip != null">
+				ip = #{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="client != null">
+				client = #{client,jdbcType=CHAR},
+			</if>
+			<if test="currentCycle != null">
+				current_cycle = #{currentCycle,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBills">
+		update
+		trade_withdraw_bills
+		set user_id = #{userId,jdbcType=BIGINT},
+		amount =
+		#{amount,jdbcType=BIGINT},
+		status = #{status,jdbcType=CHAR},
+		huifu_status = #{huifuStatus,jdbcType=VARCHAR},
+		is_weekend = #{isWeekend,jdbcType=BIGINT},
+		pay_fee =
+		#{payFee,jdbcType=REAL},
+		confirmed_at =
+		#{confirmedAt,jdbcType=TIMESTAMP},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{deletedAt,jdbcType=TIMESTAMP},
+		order_code =
+		#{orderCode,jdbcType=VARCHAR},
+		paytypeid =
+		#{paytypeid,jdbcType=VARCHAR},
+		days = #{days,jdbcType=BIGINT},
+		ip =
+		#{ip,jdbcType=VARCHAR},
+		client = #{client,jdbcType=CHAR},
+		current_cycle
+		= #{currentCycle,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<!-- 自定义 -->
+	<insert id="insertSelectiveReturnId"  parameterType="com.tiancaibao.pojo.trade.TradeWithdrawBills" useGeneratedKeys="true" keyProperty="id">
+		insert into trade_withdraw_bills
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="huifuStatus != null">
+				huifu_status,
+			</if>
+			<if test="isWeekend != null">
+				is_weekend,
+			</if>
+			<if test="payFee != null">
+				pay_fee,
+			</if>
+			<if test="confirmedAt != null">
+				confirmed_at,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="orderCode != null">
+				order_code,
+			</if>
+			<if test="paytypeid != null">
+				paytypeid,
+			</if>
+			<if test="days != null">
+				days,
+			</if>
+			<if test="ip != null">
+				ip,
+			</if>
+			<if test="client != null">
+				client,
+			</if>
+			<if test="currentCycle != null">
+				current_cycle,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=BIGINT},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=CHAR},
+			</if>
+			<if test="huifuStatus != null">
+				#{huifuStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="isWeekend != null">
+				#{isWeekend,jdbcType=BIGINT},
+			</if>
+			<if test="payFee != null">
+				#{payFee,jdbcType=REAL},
+			</if>
+			<if test="confirmedAt != null">
+				#{confirmedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="orderCode != null">
+				#{orderCode,jdbcType=VARCHAR},
+			</if>
+			<if test="paytypeid != null">
+				#{paytypeid,jdbcType=VARCHAR},
+			</if>
+			<if test="days != null">
+				#{days,jdbcType=BIGINT},
+			</if>
+			<if test="ip != null">
+				#{ip,jdbcType=VARCHAR},
+			</if>
+			<if test="client != null">
+				#{client,jdbcType=CHAR},
+			</if>
+			<if test="currentCycle != null">
+				#{currentCycle,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="selectSumAamountByUserIdAndStatusAndCurrentCycle"
+		resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_withdraw_bills WHERE user_id =
+		#{userid} AND STATUS =
+		#{status} AND created_at 
+		LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m-%d'),'%') AND
+		current_cycle=#{current_cycle}
+	</select>
+	<select id="selectSystemWithDrawSumAmountCurrentDay" resultType="long">
+		SELECT IFNULL(SUM(amount),0) FROM trade_withdraw_bills WHERE STATUS != 'CANCELLED' AND
+		created_at LIKE CONCAT(DATE_FORMAT(NOW(),'%Y-%m-%d'),'%')
+	</select>
+</mapper>

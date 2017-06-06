@@ -1,0 +1,75 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 配置dubbo的服务提供方 -->
+
+	<!-- 指定服务方法的名称 -->
+	<dubbo:application name="service-user-service" />
+
+	<!-- 配置dubbo直连 -->
+	<!-- <dubbo:registry address="N/A"/> -->
+	<!-- 配置注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+
+	<!-- 监听注册中心服务并消费 -->
+
+	<dubbo:reference id="userService"
+		interface="com.tiancaibao.service.interfaces.user.IUserService"
+		url="dubbo://${dubbo.userService.host}:${dubbo.userService.port}"
+		check="false" />
+
+	<dubbo:reference id="userBlackListService"
+		interface="com.tiancaibao.service.interfaces.user.IUserBlackListService"
+		url="dubbo://${dubbo.userService.host}:${dubbo.userService.port}"
+		check="false" />
+
+	<dubbo:reference id="userBeedBackService"
+		interface="com.tiancaibao.service.interfaces.user.IUserFeedBackService"
+		url="dubbo://${dubbo.userService.host}:${dubbo.userService.port}"
+		check="false" />
+
+	<dubbo:reference id="userLoginLogService"
+		interface="com.tiancaibao.service.interfaces.user.IUserLoginLogsService"
+		url="dubbo://${dubbo.userService.host}:${dubbo.userService.port}"
+		check="false" />
+
+	<dubbo:reference id="userSignInService"
+		interface="com.tiancaibao.service.interfaces.user.IUserSignInService"
+		url="dubbo://${dubbo.userService.host}:${dubbo.userService.port}"
+		check="false" />
+	<dubbo:reference id="systemNewsService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemNewsService"
+		check="false" />
+		
+	<dubbo:reference id="systemNewsBizService"
+		interface="com.tiancaibao.service.interfaces.system.biz.ISystemNewsBizService"
+		check="false" />
+	<dubbo:reference id="systemMessagesService"
+		interface="com.tiancaibao.service.interfaces.system.ISystemMessagesService"
+		check="false" />
+		
+	<dubbo:reference id="systemMessagesBizService"
+		interface="com.tiancaibao.service.interfaces.system.biz.ISystemMessagesBizService"
+		check="false" />
+
+	<!-- 配置dubbo全局超时时间 -->
+	<dubbo:consumer timeout="6000000" />
+	<dubbo:provider timeout="5000000" />
+</beans>
