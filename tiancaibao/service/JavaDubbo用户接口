@@ -1,0 +1,14 @@
+invoke com.tiancaibao.service.interfaces.user.IUserService.selectUserById("2")
+
+
+invoke com.tiancaibao.service.interfaces.user.IUserService.selectUserIdByPhone("18600399682")
+
+
+invoke com.tiancaibao.service.interfaces.user.IUserService.selectUserIdByToken("48cdc548c0ca5e70b5c7b6d0ee151c49")
+
+
+invoke com.tiancaibao.service.interfaces.user.IUserService.clearAllUserCache()
+
+
+invoke com.tiancaibao.service.interfaces.user.IUserService.updateUserRememberTokenById("2","1234","48cdc548c0ca5e70b5c7b6d0ee151c49")
+
