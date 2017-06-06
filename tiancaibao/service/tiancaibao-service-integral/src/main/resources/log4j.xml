@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" >
+
+  <appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender"> 
+	  	<!-- value指定消息输出到tiancaibao.log    将日志记录到tomcat下的logs文件夹 -->
+	    <param name="File" value="./logs/tiancaibao.log" />
+	    <!--true 消息增加到指定文件中，false消息覆盖指定的文件内容  -->
+	    <param name="Append" value="true" />
+	    <!-- 消息输入出的最低层次 -->
+	    <param name="Threshold" value="INFO"/>
+	   
+	    <!-- 产生新的文件时间，每天 -->
+	    <param name="DatePattern" value="'.'yyyy-MM-dd"/>
+	    <!-- 输出文件格式 -->
+	    <!--  
+	    <layout class="org.apache.log4j.PatternLayout">
+	    -->
+	    <layout class="com.tiancaibao.exlog4j.ExPatternLayout">
+		      <!-- The default pattern: Date Priority [Category] Message\n -->
+		      <!-- 格式的顺序 
+		      %r输出自应用启动到输出该log信息耗费的毫秒数
+		      %d日期
+		      %p日志优先级
+		      %m输出代码中指定的消息,产生的日志具体信息
+		      %c通常就是所在类的全名
+		      %l输出代码中的行号
+		      %n输出一个回车换行符，Windows平台为"\r\n"，Unix平台为"\n"输出日志信息换行
+		      %T输出线程id
+		      -->
+		      <!--  
+		      <param name="ConversionPattern" value="%d %-5p %m %l%n"/>
+		      -->
+		       <param name="ConversionPattern" value="%d %T %c %5p - %m%n" />
+	    </layout> 
+  </appender>
+
+   <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+      <param name="Target" value="System.out"/>
+      <param name="Threshold" value="INFO"/>
+	<!--  
+	    <layout class="org.apache.log4j.PatternLayout">
+	-->
+	    <layout class="com.tiancaibao.exlog4j.ExPatternLayout">
+	  
+<!-- 	      <param name="ConversionPattern" value="%d %-5p %m %c %l %n"/> -->
+	 
+	       <param name="ConversionPattern" value="%d %T %5p - %m%n"/>
+	    </layout>
+  </appender>
+
+   <!-- 各个包中的类日志输出级别 -->
+   <category name="com.tiancaibao">
+     <priority value="INFO"/>
+   </category>
+
+
+	<category name="org.mybatis">
+	    <priority value="ERROR"/>
+	</category>
+	<category name="org.springframework">
+	    <priority value="INFO"/>
+	</category>
+	<category name="org.quartz">
+	    <priority value="ERROR"/>
+	</category>
+
+   <root>
+      <appender-ref ref="CONSOLE"/>
+      <appender-ref ref="FILE"/>
+   </root>
+</log4j:configuration>

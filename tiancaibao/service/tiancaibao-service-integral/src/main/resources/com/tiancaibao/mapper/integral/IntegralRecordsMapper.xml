@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.integral.IntegralRecordsMapper">
+	<resultMap id="BaseResultMap" type="com.tiancaibao.pojo.integral.IntegralRecords">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="shopindent_id" property="shopindentId"
+			jdbcType="INTEGER" />
+		<result column="user_current_integral" property="userCurrentIntegral"
+			jdbcType="INTEGER" />
+		<result column="source" property="source" jdbcType="CHAR" />
+		<result column="integral" property="integral" jdbcType="INTEGER" />
+		<result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+		<result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+		<result column="electronic_coupon_category_id" property="electronicCouponCategoryId"
+			jdbcType="INTEGER" />
+		<result column="add_interest_coupon_id" property="addInterestCouponId"
+			jdbcType="INTEGER" />
+		<result column="sid" property="sid" jdbcType="INTEGER" />
+		<result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+		<result column="remark" property="remark" jdbcType="CHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		<if test="fields == null">
+			id, user_id, shopindent_id, user_current_integral, source,
+			integral,
+			created_at,
+			updated_at, electronic_coupon_category_id,
+			add_interest_coupon_id, sid,
+			deleted_at,remark
+		</if>
+		<if test="fields != null">
+			${fields}
+		</if>
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.tiancaibao.pojo.integral.IntegralRecordsExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from integral_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null">
+			limit #{startRow} , #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		id,user_id,shopindent_id,user_current_integral,source,integral,created_at,updated_at,electronic_coupon_category_id,add_interest_coupon_id,sid,deleted_at,remark
+		from integral_records
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		integral_records
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.tiancaibao.pojo.integral.IntegralRecordsExample">
+		delete from integral_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id"
+		parameterType="com.tiancaibao.pojo.integral.IntegralRecords">
+		insert into integral_records (id, user_id,
+		shopindent_id,
+		user_current_integral, source, integral,
+		created_at,
+		updated_at, electronic_coupon_category_id,
+		add_interest_coupon_id, sid,
+		deleted_at,remark
+		)
+		values (#{id,jdbcType=BIGINT},
+		#{userId,jdbcType=BIGINT},
+		#{shopindentId,jdbcType=INTEGER},
+		#{userCurrentIntegral,jdbcType=INTEGER}, #{source,jdbcType=CHAR},
+		#{integral,jdbcType=INTEGER},
+		#{createdAt,jdbcType=TIMESTAMP},
+		#{updatedAt,jdbcType=TIMESTAMP},
+		#{electronicCouponCategoryId,jdbcType=INTEGER},
+		#{addInterestCouponId,jdbcType=INTEGER}, #{sid,jdbcType=INTEGER},
+		#{deletedAt,jdbcType=TIMESTAMP},#{remark,jdbcType=CHAR}
+		)
+	</insert>
+	<insert id="insertSelective" useGeneratedKeys="true"
+		keyProperty="id" parameterType="com.tiancaibao.pojo.integral.IntegralRecords">
+		insert into integral_records
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="shopindentId != null">
+				shopindent_id,
+			</if>
+			<if test="userCurrentIntegral != null">
+				user_current_integral,
+			</if>
+			<if test="source != null">
+				source,
+			</if>
+			<if test="integral != null">
+				integral,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="electronicCouponCategoryId != null">
+				electronic_coupon_category_id,
+			</if>
+			<if test="addInterestCouponId != null">
+				add_interest_coupon_id,
+			</if>
+			<if test="sid != null">
+				sid,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="shopindentId != null">
+				#{shopindentId,jdbcType=INTEGER},
+			</if>
+			<if test="userCurrentIntegral != null">
+				#{userCurrentIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="source != null">
+				#{source,jdbcType=CHAR},
+			</if>
+			<if test="integral != null">
+				#{integral,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="electronicCouponCategoryId != null">
+				#{electronicCouponCategoryId,jdbcType=INTEGER},
+			</if>
+			<if test="addInterestCouponId != null">
+				#{addInterestCouponId,jdbcType=INTEGER},
+			</if>
+			<if test="sid != null">
+				#{sid,jdbcType=INTEGER},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=CHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.tiancaibao.pojo.integral.IntegralRecordsExample"
+		resultType="java.lang.Integer">
+		select count(*) from integral_records
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update integral_records
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=BIGINT},
+			</if>
+			<if test="record.shopindentId != null">
+				shopindent_id = #{record.shopindentId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userCurrentIntegral != null">
+				user_current_integral =
+				#{record.userCurrentIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="record.source != null">
+				source = #{record.source,jdbcType=CHAR},
+			</if>
+			<if test="record.integral != null">
+				integral = #{record.integral,jdbcType=INTEGER},
+			</if>
+			<if test="record.createdAt != null">
+				created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatedAt != null">
+				updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.electronicCouponCategoryId != null">
+				electronic_coupon_category_id =
+				#{record.electronicCouponCategoryId,jdbcType=INTEGER},
+			</if>
+			<if test="record.addInterestCouponId != null">
+				add_interest_coupon_id =
+				#{record.addInterestCouponId,jdbcType=INTEGER},
+			</if>
+			<if test="record.sid != null">
+				sid = #{record.sid,jdbcType=INTEGER},
+			</if>
+			<if test="record.deletedAt != null">
+				deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.remark != null">
+				source = #{record.remark,jdbcType=CHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update integral_records
+		set id = #{record.id,jdbcType=BIGINT},
+		user_id =
+		#{record.userId,jdbcType=BIGINT},
+		shopindent_id =
+		#{record.shopindentId,jdbcType=INTEGER},
+		user_current_integral =
+		#{record.userCurrentIntegral,jdbcType=INTEGER},
+		source =
+		#{record.source,jdbcType=CHAR},
+		integral =
+		#{record.integral,jdbcType=INTEGER},
+		created_at =
+		#{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{record.updatedAt,jdbcType=TIMESTAMP},
+		electronic_coupon_category_id =
+		#{record.electronicCouponCategoryId,jdbcType=INTEGER},
+		add_interest_coupon_id =
+		#{record.addInterestCouponId,jdbcType=INTEGER},
+		sid =
+		#{record.sid,jdbcType=INTEGER},
+		deleted_at =
+		#{record.deletedAt,jdbcType=TIMESTAMP},
+		remark =
+		#{record.remark,jdbcType=CHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.integral.IntegralRecords">
+		update integral_records
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=BIGINT},
+			</if>
+			<if test="shopindentId != null">
+				shopindent_id = #{shopindentId,jdbcType=INTEGER},
+			</if>
+			<if test="userCurrentIntegral != null">
+				user_current_integral =
+				#{userCurrentIntegral,jdbcType=INTEGER},
+			</if>
+			<if test="source != null">
+				source = #{source,jdbcType=CHAR},
+			</if>
+			<if test="integral != null">
+				integral = #{integral,jdbcType=INTEGER},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="electronicCouponCategoryId != null">
+				electronic_coupon_category_id =
+				#{electronicCouponCategoryId,jdbcType=INTEGER},
+			</if>
+			<if test="addInterestCouponId != null">
+				add_interest_coupon_id =
+				#{addInterestCouponId,jdbcType=INTEGER},
+			</if>
+			<if test="sid != null">
+				sid = #{sid,jdbcType=INTEGER},
+			</if>
+			<if test="deletedAt != null">
+				deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="remark != null">
+				source = #{remark,jdbcType=CHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.integral.IntegralRecords">
+		update
+		integral_records
+		set user_id = #{userId,jdbcType=BIGINT},
+		shopindent_id
+		= #{shopindentId,jdbcType=INTEGER},
+		user_current_integral =
+		#{userCurrentIntegral,jdbcType=INTEGER},
+		source =
+		#{source,jdbcType=CHAR},
+		integral = #{integral,jdbcType=INTEGER},
+		created_at = #{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		electronic_coupon_category_id =
+		#{electronicCouponCategoryId,jdbcType=INTEGER},
+		add_interest_coupon_id
+		= #{addInterestCouponId,jdbcType=INTEGER},
+		sid =
+		#{sid,jdbcType=INTEGER},
+		deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+		remark =
+		#{remark,jdbcType=CHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	
+	<!-- 求已使用积分的和 -->
+	<select id="">
+		SELECT sum() 
+		FROM 
+		WHERE user_id = #{id} 
+	</select>
+</mapper>

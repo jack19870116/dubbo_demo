@@ -1,0 +1,78 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+		http://www.springframework.org/schema/jms
+        http://www.springframework.org/schema/jms/spring-jms-4.0.xsd
+        http://activemq.apache.org/schema/core
+        http://activemq.apache.org/schema/core/activemq-core-5.9.0.xsd">
+
+
+	<!-- spring整合JMS 生产者 -->
+	<!-- 配置JMS服务提供商 ActiveMQ -->
+	<bean id="activeMQConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<!-- 连接ActiveMQ服务地址 -->
+		<property name="brokerURL" value="${mq.brokerURL}" />
+		<property name="userName" value="${mq.userName}" />
+		<property name="password" value="${mq.password}" />
+	</bean>
+	<!-- 配置ActiveMQ的连接池工厂 -->
+	<bean id="pooledConnectionFactoryBean" class="org.apache.activemq.pool.PooledConnectionFactoryBean">
+		<property name="connectionFactory" ref="activeMQConnectionFactory" />
+		<property name="maxConnections" value="${mq.pool.maxConnections}" />
+	</bean>
+
+	<!-- spring管理JMS(ActiveMQ) -->
+	<bean id="singleConnectionFactory"
+		class="org.springframework.jms.connection.SingleConnectionFactory">
+		<property name="targetConnectionFactory" ref="pooledConnectionFactoryBean" />
+	</bean>
+
+	<!-- spring管理jsmTemplate用于发送消息值ActiveMQ服务 -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<!-- 指定ActiveMQ连接工厂 -->
+		<property name="connectionFactory" ref="singleConnectionFactory" />
+		<!-- 指定消息队列名称 -->
+		<property name="defaultDestinationName" value="smsMSG" />
+		<!-- 消息队列生产者消费者模式 -->
+		<property name="pubSubDomain" value="false" />
+	</bean>
+	<!-- 出业务bean -->
+
+	<bean id="changeTalentValueRecordReceiver"
+		class="com.tiancaibao.service.talent.biz.TalentValueMqServiceImpl"></bean>
+	<bean id="changeIntegralValueRecordReceiver"
+		class="com.tiancaibao.service.integral.biz.IntegralMqServiceImpl"></bean>
+
+	<!-- 定义Queue监听器 -->
+
+
+	<jms:listener-container destination-type="queue"
+		container-type="default" connection-factory="singleConnectionFactory"
+		acknowledge="auto">
+		<jms:listener destination="talentValuequeue"
+			ref="changeTalentValueRecordReceiver" />
+		<jms:listener destination="integralQueue"
+			ref="changeIntegralValueRecordReceiver" />
+	</jms:listener-container>
+
+
+
+
+</beans>
