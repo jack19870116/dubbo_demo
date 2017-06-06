@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tiancaibao.mapper.shop.ShopIndentsMapper" >
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.shop.ShopIndents" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
+    <result column="gquantity" property="gquantity" jdbcType="INTEGER" />
+    <result column="gtotal_price" property="gtotalPrice" jdbcType="BIGINT" />
+    <result column="gname" property="gname" jdbcType="VARCHAR" />
+    <result column="gzone" property="gzone" jdbcType="TINYINT" />
+    <result column="gaddr" property="gaddr" jdbcType="VARCHAR" />
+    <result column="gpostcode" property="gpostcode" jdbcType="CHAR" />
+    <result column="gphone" property="gphone" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="deleted_at" property="deletedAt" jdbcType="TIMESTAMP" />
+    <result column="sid" property="sid" jdbcType="INTEGER" />
+    <result column="shop_class_id" property="shopClassId" jdbcType="TINYINT" />
+    <result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+    <result column="order_status" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="express_name" property="expressName" jdbcType="VARCHAR" />
+    <result column="electronic_coupon_id" property="electronicCouponId" jdbcType="INTEGER" />
+    <result column="add_interest_coupon_id" property="addInterestCouponId" jdbcType="INTEGER" />
+    <result column="address_id" property="addressId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      id, user_id, gquantity, gtotal_price, gname, gzone, gaddr, gpostcode, gphone, updated_at, 
+      created_at, deleted_at, sid, shop_class_id, order_number, order_status, express_name, 
+      electronic_coupon_id, add_interest_coupon_id, address_id
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.tiancaibao.pojo.shop.ShopIndentsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from shop_indents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null" >
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    id,user_id,gquantity,gtotal_price,gname,gzone,gaddr,gpostcode,gphone,updated_at,created_at,deleted_at,sid,shop_class_id,order_number,order_status,express_name,electronic_coupon_id,add_interest_coupon_id,address_id
+    from shop_indents
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from shop_indents
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.shop.ShopIndentsExample" >
+    delete from shop_indents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.shop.ShopIndents" >
+    insert into shop_indents (id, user_id, gquantity, 
+      gtotal_price, gname, gzone, 
+      gaddr, gpostcode, gphone, 
+      updated_at, created_at, deleted_at, 
+      sid, shop_class_id, order_number, 
+      order_status, express_name, electronic_coupon_id, 
+      add_interest_coupon_id, address_id)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{gquantity,jdbcType=INTEGER}, 
+      #{gtotalPrice,jdbcType=BIGINT}, #{gname,jdbcType=VARCHAR}, #{gzone,jdbcType=TINYINT}, 
+      #{gaddr,jdbcType=VARCHAR}, #{gpostcode,jdbcType=CHAR}, #{gphone,jdbcType=VARCHAR}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{deletedAt,jdbcType=TIMESTAMP}, 
+      #{sid,jdbcType=INTEGER}, #{shopClassId,jdbcType=TINYINT}, #{orderNumber,jdbcType=VARCHAR}, 
+      #{orderStatus,jdbcType=VARCHAR}, #{expressName,jdbcType=VARCHAR}, #{electronicCouponId,jdbcType=INTEGER}, 
+      #{addInterestCouponId,jdbcType=INTEGER}, #{addressId,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.shop.ShopIndents" >
+    insert into shop_indents
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="gquantity != null" >
+        gquantity,
+      </if>
+      <if test="gtotalPrice != null" >
+        gtotal_price,
+      </if>
+      <if test="gname != null" >
+        gname,
+      </if>
+      <if test="gzone != null" >
+        gzone,
+      </if>
+      <if test="gaddr != null" >
+        gaddr,
+      </if>
+      <if test="gpostcode != null" >
+        gpostcode,
+      </if>
+      <if test="gphone != null" >
+        gphone,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at,
+      </if>
+      <if test="sid != null" >
+        sid,
+      </if>
+      <if test="shopClassId != null" >
+        shop_class_id,
+      </if>
+      <if test="orderNumber != null" >
+        order_number,
+      </if>
+      <if test="orderStatus != null" >
+        order_status,
+      </if>
+      <if test="expressName != null" >
+        express_name,
+      </if>
+      <if test="electronicCouponId != null" >
+        electronic_coupon_id,
+      </if>
+      <if test="addInterestCouponId != null" >
+        add_interest_coupon_id,
+      </if>
+      <if test="addressId != null" >
+        address_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="gquantity != null" >
+        #{gquantity,jdbcType=INTEGER},
+      </if>
+      <if test="gtotalPrice != null" >
+        #{gtotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gname != null" >
+        #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gzone != null" >
+        #{gzone,jdbcType=TINYINT},
+      </if>
+      <if test="gaddr != null" >
+        #{gaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gpostcode != null" >
+        #{gpostcode,jdbcType=CHAR},
+      </if>
+      <if test="gphone != null" >
+        #{gphone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sid != null" >
+        #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="shopClassId != null" >
+        #{shopClassId,jdbcType=TINYINT},
+      </if>
+      <if test="orderNumber != null" >
+        #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="expressName != null" >
+        #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="electronicCouponId != null" >
+        #{electronicCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="addInterestCouponId != null" >
+        #{addInterestCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="addressId != null" >
+        #{addressId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.shop.ShopIndentsExample" resultType="java.lang.Integer" >
+    select count(*) from shop_indents
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update shop_indents
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.gquantity != null" >
+        gquantity = #{record.gquantity,jdbcType=INTEGER},
+      </if>
+      <if test="record.gtotalPrice != null" >
+        gtotal_price = #{record.gtotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="record.gname != null" >
+        gname = #{record.gname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gzone != null" >
+        gzone = #{record.gzone,jdbcType=TINYINT},
+      </if>
+      <if test="record.gaddr != null" >
+        gaddr = #{record.gaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gpostcode != null" >
+        gpostcode = #{record.gpostcode,jdbcType=CHAR},
+      </if>
+      <if test="record.gphone != null" >
+        gphone = #{record.gphone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.deletedAt != null" >
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sid != null" >
+        sid = #{record.sid,jdbcType=INTEGER},
+      </if>
+      <if test="record.shopClassId != null" >
+        shop_class_id = #{record.shopClassId,jdbcType=TINYINT},
+      </if>
+      <if test="record.orderNumber != null" >
+        order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null" >
+        order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expressName != null" >
+        express_name = #{record.expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.electronicCouponId != null" >
+        electronic_coupon_id = #{record.electronicCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addInterestCouponId != null" >
+        add_interest_coupon_id = #{record.addInterestCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addressId != null" >
+        address_id = #{record.addressId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update shop_indents
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      gquantity = #{record.gquantity,jdbcType=INTEGER},
+      gtotal_price = #{record.gtotalPrice,jdbcType=BIGINT},
+      gname = #{record.gname,jdbcType=VARCHAR},
+      gzone = #{record.gzone,jdbcType=TINYINT},
+      gaddr = #{record.gaddr,jdbcType=VARCHAR},
+      gpostcode = #{record.gpostcode,jdbcType=CHAR},
+      gphone = #{record.gphone,jdbcType=VARCHAR},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      sid = #{record.sid,jdbcType=INTEGER},
+      shop_class_id = #{record.shopClassId,jdbcType=TINYINT},
+      order_number = #{record.orderNumber,jdbcType=VARCHAR},
+      order_status = #{record.orderStatus,jdbcType=VARCHAR},
+      express_name = #{record.expressName,jdbcType=VARCHAR},
+      electronic_coupon_id = #{record.electronicCouponId,jdbcType=INTEGER},
+      add_interest_coupon_id = #{record.addInterestCouponId,jdbcType=INTEGER},
+      address_id = #{record.addressId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.shop.ShopIndents" >
+    update shop_indents
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="gquantity != null" >
+        gquantity = #{gquantity,jdbcType=INTEGER},
+      </if>
+      <if test="gtotalPrice != null" >
+        gtotal_price = #{gtotalPrice,jdbcType=BIGINT},
+      </if>
+      <if test="gname != null" >
+        gname = #{gname,jdbcType=VARCHAR},
+      </if>
+      <if test="gzone != null" >
+        gzone = #{gzone,jdbcType=TINYINT},
+      </if>
+      <if test="gaddr != null" >
+        gaddr = #{gaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="gpostcode != null" >
+        gpostcode = #{gpostcode,jdbcType=CHAR},
+      </if>
+      <if test="gphone != null" >
+        gphone = #{gphone,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="deletedAt != null" >
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sid != null" >
+        sid = #{sid,jdbcType=INTEGER},
+      </if>
+      <if test="shopClassId != null" >
+        shop_class_id = #{shopClassId,jdbcType=TINYINT},
+      </if>
+      <if test="orderNumber != null" >
+        order_number = #{orderNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null" >
+        order_status = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="expressName != null" >
+        express_name = #{expressName,jdbcType=VARCHAR},
+      </if>
+      <if test="electronicCouponId != null" >
+        electronic_coupon_id = #{electronicCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="addInterestCouponId != null" >
+        add_interest_coupon_id = #{addInterestCouponId,jdbcType=INTEGER},
+      </if>
+      <if test="addressId != null" >
+        address_id = #{addressId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.shop.ShopIndents" >
+    update shop_indents
+    set user_id = #{userId,jdbcType=BIGINT},
+      gquantity = #{gquantity,jdbcType=INTEGER},
+      gtotal_price = #{gtotalPrice,jdbcType=BIGINT},
+      gname = #{gname,jdbcType=VARCHAR},
+      gzone = #{gzone,jdbcType=TINYINT},
+      gaddr = #{gaddr,jdbcType=VARCHAR},
+      gpostcode = #{gpostcode,jdbcType=CHAR},
+      gphone = #{gphone,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      sid = #{sid,jdbcType=INTEGER},
+      shop_class_id = #{shopClassId,jdbcType=TINYINT},
+      order_number = #{orderNumber,jdbcType=VARCHAR},
+      order_status = #{orderStatus,jdbcType=VARCHAR},
+      express_name = #{expressName,jdbcType=VARCHAR},
+      electronic_coupon_id = #{electronicCouponId,jdbcType=INTEGER},
+      add_interest_coupon_id = #{addInterestCouponId,jdbcType=INTEGER},
+      address_id = #{addressId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

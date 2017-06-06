@@ -1,0 +1,991 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiancaibao.mapper.system.SystemTenderProductMapper">
+	<resultMap id="BaseResultMap"
+		type="com.tiancaibao.pojo.system.SystemTenderProduct">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="project_id" jdbcType="BIGINT" property="projectId" />
+		<result column="project_name" jdbcType="VARCHAR" property="projectName" />
+		<result column="loan_phone" jdbcType="VARCHAR" property="loanPhone" />
+		<result column="loan_object" jdbcType="VARCHAR" property="loanObject" />
+		<result column="loan_route" jdbcType="VARCHAR" property="loanRoute" />
+		<result column="loan_amount" jdbcType="BIGINT" property="loanAmount" />
+		<result column="count_limit" jdbcType="INTEGER" property="countLimit" />
+		<result column="money_limit" jdbcType="BIGINT" property="moneyLimit" />
+		<result column="annual_rate" jdbcType="BIGINT" property="annualRate" />
+		<result column="surplus_amount" jdbcType="BIGINT" property="surplusAmount" />
+		<result column="extra_rate" jdbcType="BIGINT" property="extraRate" />
+		<result column="loan_unit" jdbcType="VARCHAR" property="loanUnit" />
+		<result column="loan_limit" jdbcType="INTEGER" property="loanLimit" />
+		<result column="bid_deadtime" jdbcType="INTEGER" property="bidDeadtime" />
+		<result column="least_invest_amount" jdbcType="BIGINT"
+			property="leastInvestAmount" />
+		<result column="most_invest_amount" jdbcType="BIGINT" property="mostInvestAmount" />
+		<result column="pro_group" jdbcType="VARCHAR" property="proGroup" />
+		<result column="group_desc" jdbcType="VARCHAR" property="groupDesc" />
+		<result column="hot_tags" jdbcType="INTEGER" property="hotTags" />
+		<result column="pro_img_path" jdbcType="VARCHAR" property="proImgPath" />
+		<result column="payment_method" jdbcType="VARCHAR" property="paymentMethod" />
+		<result column="states" jdbcType="INTEGER" property="states" />
+		<result column="release_time" jdbcType="TIMESTAMP" property="releaseTime" />
+		<result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+		<result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+		<result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+		<result column="interest_date" jdbcType="TIMESTAMP" property="interestDate" />
+		<result column="last_repay_date" jdbcType="TIMESTAMP" property="lastRepayDate" />
+		<result column="term" jdbcType="INTEGER" property="term" />
+		<result column="already_term" jdbcType="INTEGER" property="alreadyTerm" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.tiancaibao.pojo.system.SystemTenderProduct">
+		<result column="loan_desc" jdbcType="LONGVARCHAR" property="loanDesc" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, project_id, project_name, loan_phone, loan_object,
+		loan_route,
+		loan_amount, count_limit,
+		money_limit, annual_rate,
+		surplus_amount, extra_rate, loan_unit, loan_limit,
+		bid_deadtime,
+		least_invest_amount, most_invest_amount, pro_group, group_desc,
+		hot_tags, pro_img_path,
+		payment_method, states, release_time,
+		created_at, updated_at,
+		deleted_at, interest_date,
+		last_repay_date,
+		term, already_term
+	</sql>
+	<sql id="Blob_Column_List">
+		loan_desc
+	</sql>
+	<select id="selectByExampleWithBLOBs"
+		parameterType="com.tiancaibao.pojo.system.SystemTenderProductExample"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from system_tender_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByExample"
+		parameterType="com.tiancaibao.pojo.system.SystemTenderProductExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from system_tender_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+		<if test="startRow != null">
+			limit #{startRow} , #{pageSize}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from system_tender_product
+		where id = #{id,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		system_tender_product
+		where id = #{id,jdbcType=BIGINT}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.tiancaibao.pojo.system.SystemTenderProductExample">
+		delete from system_tender_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		insert into
+		system_tender_product (id, project_id, project_name,
+		loan_phone,
+		loan_object, loan_route,
+		loan_amount, count_limit, money_limit,
+		annual_rate, surplus_amount, extra_rate,
+		loan_unit, loan_limit,
+		bid_deadtime,
+		least_invest_amount, most_invest_amount, pro_group,
+		group_desc, hot_tags, pro_img_path,
+		payment_method, states,
+		release_time,
+		created_at, updated_at, deleted_at,
+		interest_date,
+		last_repay_date, term,
+		already_term, loan_desc)
+		values
+		(#{id,jdbcType=BIGINT}, #{projectId,jdbcType=BIGINT},
+		#{projectName,jdbcType=VARCHAR},
+		#{loanPhone,jdbcType=VARCHAR},
+		#{loanObject,jdbcType=VARCHAR}, #{loanRoute,jdbcType=VARCHAR},
+		#{loanAmount,jdbcType=BIGINT}, #{countLimit,jdbcType=INTEGER},
+		#{moneyLimit,jdbcType=BIGINT},
+		#{annualRate,jdbcType=BIGINT},
+		#{surplusAmount,jdbcType=BIGINT}, #{extraRate,jdbcType=BIGINT},
+		#{loanUnit,jdbcType=VARCHAR}, #{loanLimit,jdbcType=INTEGER},
+		#{bidDeadtime,jdbcType=INTEGER},
+		#{leastInvestAmount,jdbcType=BIGINT},
+		#{mostInvestAmount,jdbcType=BIGINT}, #{proGroup,jdbcType=VARCHAR},
+		#{groupDesc,jdbcType=VARCHAR}, #{hotTags,jdbcType=INTEGER},
+		#{proImgPath,jdbcType=VARCHAR},
+		#{paymentMethod,jdbcType=VARCHAR},
+		#{states,jdbcType=INTEGER}, #{releaseTime,jdbcType=TIMESTAMP},
+		#{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP},
+		#{deletedAt,jdbcType=TIMESTAMP},
+		#{interestDate,jdbcType=TIMESTAMP},
+		#{lastRepayDate,jdbcType=TIMESTAMP}, #{term,jdbcType=INTEGER},
+		#{alreadyTerm,jdbcType=INTEGER}, #{loanDesc,jdbcType=LONGVARCHAR})
+	</insert>
+	<insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		insert into system_tender_product
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="projectId != null">
+				project_id,
+			</if>
+			<if test="projectName != null">
+				project_name,
+			</if>
+			<if test="loanPhone != null">
+				loan_phone,
+			</if>
+			<if test="loanObject != null">
+				loan_object,
+			</if>
+			<if test="loanRoute != null">
+				loan_route,
+			</if>
+			<if test="loanAmount != null">
+				loan_amount,
+			</if>
+			<if test="countLimit != null">
+				count_limit,
+			</if>
+			<if test="moneyLimit != null">
+				money_limit,
+			</if>
+			<if test="annualRate != null">
+				annual_rate,
+			</if>
+			<if test="surplusAmount != null">
+				surplus_amount,
+			</if>
+			<if test="extraRate != null">
+				extra_rate,
+			</if>
+			<if test="loanUnit != null">
+				loan_unit,
+			</if>
+			<if test="loanLimit != null">
+				loan_limit,
+			</if>
+			<if test="bidDeadtime != null">
+				bid_deadtime,
+			</if>
+			<if test="leastInvestAmount != null">
+				least_invest_amount,
+			</if>
+			<if test="mostInvestAmount != null">
+				most_invest_amount,
+			</if>
+			<if test="proGroup != null">
+				pro_group,
+			</if>
+			<if test="groupDesc != null">
+				group_desc,
+			</if>
+			<if test="hotTags != null">
+				hot_tags,
+			</if>
+			<if test="proImgPath != null">
+				pro_img_path,
+			</if>
+			<if test="paymentMethod != null">
+				payment_method,
+			</if>
+			<if test="states != null">
+				states,
+			</if>
+			<if test="releaseTime != null">
+				release_time,
+			</if>
+			<if test="createdAt != null">
+				created_at,
+			</if>
+			<if test="updatedAt != null">
+				updated_at,
+			</if>
+			<if test="deletedAt != null">
+				deleted_at,
+			</if>
+			<if test="interestDate != null">
+				interest_date,
+			</if>
+			<if test="lastRepayDate != null">
+				last_repay_date,
+			</if>
+			<if test="term != null">
+				term,
+			</if>
+			<if test="alreadyTerm != null">
+				already_term,
+			</if>
+			<if test="loanDesc != null">
+				loan_desc,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=BIGINT},
+			</if>
+			<if test="projectId != null">
+				#{projectId,jdbcType=BIGINT},
+			</if>
+			<if test="projectName != null">
+				#{projectName,jdbcType=VARCHAR},
+			</if>
+			<if test="loanPhone != null">
+				#{loanPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="loanObject != null">
+				#{loanObject,jdbcType=VARCHAR},
+			</if>
+			<if test="loanRoute != null">
+				#{loanRoute,jdbcType=VARCHAR},
+			</if>
+			<if test="loanAmount != null">
+				#{loanAmount,jdbcType=BIGINT},
+			</if>
+			<if test="countLimit != null">
+				#{countLimit,jdbcType=INTEGER},
+			</if>
+			<if test="moneyLimit != null">
+				#{moneyLimit,jdbcType=BIGINT},
+			</if>
+			<if test="annualRate != null">
+				#{annualRate,jdbcType=BIGINT},
+			</if>
+			<if test="surplusAmount != null">
+				#{surplusAmount,jdbcType=BIGINT},
+			</if>
+			<if test="extraRate != null">
+				#{extraRate,jdbcType=BIGINT},
+			</if>
+			<if test="loanUnit != null">
+				#{loanUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLimit != null">
+				#{loanLimit,jdbcType=INTEGER},
+			</if>
+			<if test="bidDeadtime != null">
+				#{bidDeadtime,jdbcType=INTEGER},
+			</if>
+			<if test="leastInvestAmount != null">
+				#{leastInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="mostInvestAmount != null">
+				#{mostInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="proGroup != null">
+				#{proGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="groupDesc != null">
+				#{groupDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="hotTags != null">
+				#{hotTags,jdbcType=INTEGER},
+			</if>
+			<if test="proImgPath != null">
+				#{proImgPath,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentMethod != null">
+				#{paymentMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="states != null">
+				#{states,jdbcType=INTEGER},
+			</if>
+			<if test="releaseTime != null">
+				#{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				#{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				#{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				#{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="interestDate != null">
+				#{interestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastRepayDate != null">
+				#{lastRepayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="term != null">
+				#{term,jdbcType=INTEGER},
+			</if>
+			<if test="alreadyTerm != null">
+				#{alreadyTerm,jdbcType=INTEGER},
+			</if>
+			<if test="loanDesc != null">
+				#{loanDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.tiancaibao.pojo.system.SystemTenderProductExample"
+		resultType="java.lang.Long">
+		select count(*) from system_tender_product
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update system_tender_product
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=BIGINT},
+			</if>
+			<if test="record.projectId != null">
+				project_id = #{record.projectId,jdbcType=BIGINT},
+			</if>
+			<if test="record.projectName != null">
+				project_name = #{record.projectName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loanPhone != null">
+				loan_phone = #{record.loanPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loanObject != null">
+				loan_object = #{record.loanObject,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loanRoute != null">
+				loan_route = #{record.loanRoute,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loanAmount != null">
+				loan_amount = #{record.loanAmount,jdbcType=BIGINT},
+			</if>
+			<if test="record.countLimit != null">
+				count_limit = #{record.countLimit,jdbcType=INTEGER},
+			</if>
+			<if test="record.moneyLimit != null">
+				money_limit = #{record.moneyLimit,jdbcType=BIGINT},
+			</if>
+			<if test="record.annualRate != null">
+				annual_rate = #{record.annualRate,jdbcType=BIGINT},
+			</if>
+			<if test="record.surplusAmount != null">
+				surplus_amount = #{record.surplusAmount,jdbcType=BIGINT},
+			</if>
+			<if test="record.extraRate != null">
+				extra_rate = #{record.extraRate,jdbcType=BIGINT},
+			</if>
+			<if test="record.loanUnit != null">
+				loan_unit = #{record.loanUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="record.loanLimit != null">
+				loan_limit = #{record.loanLimit,jdbcType=INTEGER},
+			</if>
+			<if test="record.bidDeadtime != null">
+				bid_deadtime = #{record.bidDeadtime,jdbcType=INTEGER},
+			</if>
+			<if test="record.leastInvestAmount != null">
+				least_invest_amount =
+				#{record.leastInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="record.mostInvestAmount != null">
+				most_invest_amount =
+				#{record.mostInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="record.proGroup != null">
+				pro_group = #{record.proGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="record.groupDesc != null">
+				group_desc = #{record.groupDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.hotTags != null">
+				hot_tags = #{record.hotTags,jdbcType=INTEGER},
+			</if>
+			<if test="record.proImgPath != null">
+				pro_img_path = #{record.proImgPath,jdbcType=VARCHAR},
+			</if>
+			<if test="record.paymentMethod != null">
+				payment_method =
+				#{record.paymentMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="record.states != null">
+				states = #{record.states,jdbcType=INTEGER},
+			</if>
+			<if test="record.releaseTime != null">
+				release_time = #{record.releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.createdAt != null">
+				created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.updatedAt != null">
+				updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.deletedAt != null">
+				deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.interestDate != null">
+				interest_date =
+				#{record.interestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.lastRepayDate != null">
+				last_repay_date =
+				#{record.lastRepayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="record.term != null">
+				term = #{record.term,jdbcType=INTEGER},
+			</if>
+			<if test="record.alreadyTerm != null">
+				already_term = #{record.alreadyTerm,jdbcType=INTEGER},
+			</if>
+			<if test="record.loanDesc != null">
+				loan_desc = #{record.loanDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExampleWithBLOBs" parameterType="map">
+		update system_tender_product
+		set id = #{record.id,jdbcType=BIGINT},
+		project_id = #{record.projectId,jdbcType=BIGINT},
+		project_name =
+		#{record.projectName,jdbcType=VARCHAR},
+		loan_phone =
+		#{record.loanPhone,jdbcType=VARCHAR},
+		loan_object =
+		#{record.loanObject,jdbcType=VARCHAR},
+		loan_route =
+		#{record.loanRoute,jdbcType=VARCHAR},
+		loan_amount =
+		#{record.loanAmount,jdbcType=BIGINT},
+		count_limit =
+		#{record.countLimit,jdbcType=INTEGER},
+		money_limit =
+		#{record.moneyLimit,jdbcType=BIGINT},
+		annual_rate =
+		#{record.annualRate,jdbcType=BIGINT},
+		surplus_amount =
+		#{record.surplusAmount,jdbcType=BIGINT},
+		extra_rate =
+		#{record.extraRate,jdbcType=BIGINT},
+		loan_unit =
+		#{record.loanUnit,jdbcType=VARCHAR},
+		loan_limit =
+		#{record.loanLimit,jdbcType=INTEGER},
+		bid_deadtime =
+		#{record.bidDeadtime,jdbcType=INTEGER},
+		least_invest_amount =
+		#{record.leastInvestAmount,jdbcType=BIGINT},
+		most_invest_amount =
+		#{record.mostInvestAmount,jdbcType=BIGINT},
+		pro_group =
+		#{record.proGroup,jdbcType=VARCHAR},
+		group_desc =
+		#{record.groupDesc,jdbcType=VARCHAR},
+		hot_tags =
+		#{record.hotTags,jdbcType=INTEGER},
+		pro_img_path =
+		#{record.proImgPath,jdbcType=VARCHAR},
+		payment_method =
+		#{record.paymentMethod,jdbcType=VARCHAR},
+		states =
+		#{record.states,jdbcType=INTEGER},
+		release_time =
+		#{record.releaseTime,jdbcType=TIMESTAMP},
+		created_at =
+		#{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{record.updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{record.deletedAt,jdbcType=TIMESTAMP},
+		interest_date =
+		#{record.interestDate,jdbcType=TIMESTAMP},
+		last_repay_date =
+		#{record.lastRepayDate,jdbcType=TIMESTAMP},
+		term =
+		#{record.term,jdbcType=INTEGER},
+		already_term =
+		#{record.alreadyTerm,jdbcType=INTEGER},
+		loan_desc =
+		#{record.loanDesc,jdbcType=LONGVARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update system_tender_product
+		set id = #{record.id,jdbcType=BIGINT},
+		project_id = #{record.projectId,jdbcType=BIGINT},
+		project_name =
+		#{record.projectName,jdbcType=VARCHAR},
+		loan_phone =
+		#{record.loanPhone,jdbcType=VARCHAR},
+		loan_object =
+		#{record.loanObject,jdbcType=VARCHAR},
+		loan_route =
+		#{record.loanRoute,jdbcType=VARCHAR},
+		loan_amount =
+		#{record.loanAmount,jdbcType=BIGINT},
+		count_limit =
+		#{record.countLimit,jdbcType=INTEGER},
+		money_limit =
+		#{record.moneyLimit,jdbcType=BIGINT},
+		annual_rate =
+		#{record.annualRate,jdbcType=BIGINT},
+		surplus_amount =
+		#{record.surplusAmount,jdbcType=BIGINT},
+		extra_rate =
+		#{record.extraRate,jdbcType=BIGINT},
+		loan_unit =
+		#{record.loanUnit,jdbcType=VARCHAR},
+		loan_limit =
+		#{record.loanLimit,jdbcType=INTEGER},
+		bid_deadtime =
+		#{record.bidDeadtime,jdbcType=INTEGER},
+		least_invest_amount =
+		#{record.leastInvestAmount,jdbcType=BIGINT},
+		most_invest_amount =
+		#{record.mostInvestAmount,jdbcType=BIGINT},
+		pro_group =
+		#{record.proGroup,jdbcType=VARCHAR},
+		group_desc =
+		#{record.groupDesc,jdbcType=VARCHAR},
+		hot_tags =
+		#{record.hotTags,jdbcType=INTEGER},
+		pro_img_path =
+		#{record.proImgPath,jdbcType=VARCHAR},
+		payment_method =
+		#{record.paymentMethod,jdbcType=VARCHAR},
+		states =
+		#{record.states,jdbcType=INTEGER},
+		release_time =
+		#{record.releaseTime,jdbcType=TIMESTAMP},
+		created_at =
+		#{record.createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{record.updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{record.deletedAt,jdbcType=TIMESTAMP},
+		interest_date =
+		#{record.interestDate,jdbcType=TIMESTAMP},
+		last_repay_date =
+		#{record.lastRepayDate,jdbcType=TIMESTAMP},
+		term =
+		#{record.term,jdbcType=INTEGER},
+		already_term =
+		#{record.alreadyTerm,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		update system_tender_product
+		<set>
+			<if test="projectId != null">
+				project_id = #{projectId,jdbcType=BIGINT},
+			</if>
+			<if test="projectName != null">
+				project_name = #{projectName,jdbcType=VARCHAR},
+			</if>
+			<if test="loanPhone != null">
+				loan_phone = #{loanPhone,jdbcType=VARCHAR},
+			</if>
+			<if test="loanObject != null">
+				loan_object = #{loanObject,jdbcType=VARCHAR},
+			</if>
+			<if test="loanRoute != null">
+				loan_route = #{loanRoute,jdbcType=VARCHAR},
+			</if>
+			<if test="loanAmount != null">
+				loan_amount = #{loanAmount,jdbcType=BIGINT},
+			</if>
+			<if test="countLimit != null">
+				count_limit = #{countLimit,jdbcType=INTEGER},
+			</if>
+			<if test="moneyLimit != null">
+				money_limit = #{moneyLimit,jdbcType=BIGINT},
+			</if>
+			<if test="annualRate != null">
+				annual_rate = #{annualRate,jdbcType=BIGINT},
+			</if>
+			<if test="surplusAmount != null">
+				surplus_amount = #{surplusAmount,jdbcType=BIGINT},
+			</if>
+			<if test="extraRate != null">
+				extra_rate = #{extraRate,jdbcType=BIGINT},
+			</if>
+			<if test="loanUnit != null">
+				loan_unit = #{loanUnit,jdbcType=VARCHAR},
+			</if>
+			<if test="loanLimit != null">
+				loan_limit = #{loanLimit,jdbcType=INTEGER},
+			</if>
+			<if test="bidDeadtime != null">
+				bid_deadtime = #{bidDeadtime,jdbcType=INTEGER},
+			</if>
+			<if test="leastInvestAmount != null">
+				least_invest_amount =
+				#{leastInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="mostInvestAmount != null">
+				most_invest_amount = #{mostInvestAmount,jdbcType=BIGINT},
+			</if>
+			<if test="proGroup != null">
+				pro_group = #{proGroup,jdbcType=VARCHAR},
+			</if>
+			<if test="groupDesc != null">
+				group_desc = #{groupDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="hotTags != null">
+				hot_tags = #{hotTags,jdbcType=INTEGER},
+			</if>
+			<if test="proImgPath != null">
+				pro_img_path = #{proImgPath,jdbcType=VARCHAR},
+			</if>
+			<if test="paymentMethod != null">
+				payment_method = #{paymentMethod,jdbcType=VARCHAR},
+			</if>
+			<if test="states != null">
+				states = #{states,jdbcType=INTEGER},
+			</if>
+			<if test="releaseTime != null">
+				release_time = #{releaseTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="createdAt != null">
+				created_at = #{createdAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updatedAt != null">
+				updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="deletedAt != null">
+				deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+			</if>
+			<if test="interestDate != null">
+				interest_date = #{interestDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastRepayDate != null">
+				last_repay_date = #{lastRepayDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="term != null">
+				term = #{term,jdbcType=INTEGER},
+			</if>
+			<if test="alreadyTerm != null">
+				already_term = #{alreadyTerm,jdbcType=INTEGER},
+			</if>
+			<if test="loanDesc != null">
+				loan_desc = #{loanDesc,jdbcType=LONGVARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		update
+		system_tender_product
+		set project_id = #{projectId,jdbcType=BIGINT},
+		project_name = #{projectName,jdbcType=VARCHAR},
+		loan_phone =
+		#{loanPhone,jdbcType=VARCHAR},
+		loan_object =
+		#{loanObject,jdbcType=VARCHAR},
+		loan_route =
+		#{loanRoute,jdbcType=VARCHAR},
+		loan_amount =
+		#{loanAmount,jdbcType=BIGINT},
+		count_limit =
+		#{countLimit,jdbcType=INTEGER},
+		money_limit =
+		#{moneyLimit,jdbcType=BIGINT},
+		annual_rate =
+		#{annualRate,jdbcType=BIGINT},
+		surplus_amount =
+		#{surplusAmount,jdbcType=BIGINT},
+		extra_rate =
+		#{extraRate,jdbcType=BIGINT},
+		loan_unit = #{loanUnit,jdbcType=VARCHAR},
+		loan_limit = #{loanLimit,jdbcType=INTEGER},
+		bid_deadtime =
+		#{bidDeadtime,jdbcType=INTEGER},
+		least_invest_amount =
+		#{leastInvestAmount,jdbcType=BIGINT},
+		most_invest_amount =
+		#{mostInvestAmount,jdbcType=BIGINT},
+		pro_group =
+		#{proGroup,jdbcType=VARCHAR},
+		group_desc =
+		#{groupDesc,jdbcType=VARCHAR},
+		hot_tags = #{hotTags,jdbcType=INTEGER},
+		pro_img_path = #{proImgPath,jdbcType=VARCHAR},
+		payment_method =
+		#{paymentMethod,jdbcType=VARCHAR},
+		states = #{states,jdbcType=INTEGER},
+		release_time = #{releaseTime,jdbcType=TIMESTAMP},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{deletedAt,jdbcType=TIMESTAMP},
+		interest_date =
+		#{interestDate,jdbcType=TIMESTAMP},
+		last_repay_date =
+		#{lastRepayDate,jdbcType=TIMESTAMP},
+		term = #{term,jdbcType=INTEGER},
+		already_term = #{alreadyTerm,jdbcType=INTEGER},
+		loan_desc =
+		#{loanDesc,jdbcType=LONGVARCHAR}
+		where id = #{id,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		update
+		system_tender_product
+		set project_id = #{projectId,jdbcType=BIGINT},
+		project_name = #{projectName,jdbcType=VARCHAR},
+		loan_phone =
+		#{loanPhone,jdbcType=VARCHAR},
+		loan_object =
+		#{loanObject,jdbcType=VARCHAR},
+		loan_route =
+		#{loanRoute,jdbcType=VARCHAR},
+		loan_amount =
+		#{loanAmount,jdbcType=BIGINT},
+		count_limit =
+		#{countLimit,jdbcType=INTEGER},
+		money_limit =
+		#{moneyLimit,jdbcType=BIGINT},
+		annual_rate =
+		#{annualRate,jdbcType=BIGINT},
+		surplus_amount =
+		#{surplusAmount,jdbcType=BIGINT},
+		extra_rate =
+		#{extraRate,jdbcType=BIGINT},
+		loan_unit = #{loanUnit,jdbcType=VARCHAR},
+		loan_limit = #{loanLimit,jdbcType=INTEGER},
+		bid_deadtime =
+		#{bidDeadtime,jdbcType=INTEGER},
+		least_invest_amount =
+		#{leastInvestAmount,jdbcType=BIGINT},
+		most_invest_amount =
+		#{mostInvestAmount,jdbcType=BIGINT},
+		pro_group =
+		#{proGroup,jdbcType=VARCHAR},
+		group_desc =
+		#{groupDesc,jdbcType=VARCHAR},
+		hot_tags = #{hotTags,jdbcType=INTEGER},
+		pro_img_path = #{proImgPath,jdbcType=VARCHAR},
+		payment_method =
+		#{paymentMethod,jdbcType=VARCHAR},
+		states = #{states,jdbcType=INTEGER},
+		release_time = #{releaseTime,jdbcType=TIMESTAMP},
+		created_at =
+		#{createdAt,jdbcType=TIMESTAMP},
+		updated_at =
+		#{updatedAt,jdbcType=TIMESTAMP},
+		deleted_at =
+		#{deletedAt,jdbcType=TIMESTAMP},
+		interest_date =
+		#{interestDate,jdbcType=TIMESTAMP},
+		last_repay_date =
+		#{lastRepayDate,jdbcType=TIMESTAMP},
+		term = #{term,jdbcType=INTEGER},
+		already_term = #{alreadyTerm,jdbcType=INTEGER}
+		where id =
+		#{id,jdbcType=BIGINT}
+	</update>
+	<!-- 获取热门推荐top3 -->
+	<select id="getHotTagList" resultType="com.tiancaibao.pojo.system.SystemTenderProduct"
+		resultMap="BaseResultMap">
+		SELECT
+		id, project_id,
+		project_name,
+		loan_phone, loan_object,
+		loan_route,
+		loan_amount,
+		count_limit,
+		money_limit, annual_rate,
+		surplus_amount,
+		extra_rate,
+		loan_unit,
+		loan_limit,
+		bid_deadtime,
+		least_invest_amount,
+		most_invest_amount,
+		pro_group, group_desc,
+		hot_tags, pro_img_path,
+		payment_method, states,
+		release_time,
+		created_at, updated_at,
+		deleted_at, interest_date,
+		last_repay_date,
+		term, already_term
+		FROM
+		system_tender_product
+		where hot_tags=1 AND
+		states=3 LIMIT 2
+	</select>
+	<!-- 获取单投标列表展示页 -->
+	<select id="tenderShowList" resultType="com.tiancaibao.pojo.system.SystemTenderProduct"
+		resultMap="BaseResultMap">
+		SELECT
+		id, project_id,
+		project_name,
+		loan_phone, loan_object,
+		loan_route,
+		loan_amount,
+		count_limit,
+		money_limit, annual_rate,
+		surplus_amount,
+		extra_rate,
+		loan_unit,
+		loan_limit,
+		bid_deadtime,
+		least_invest_amount,
+		most_invest_amount,
+		pro_group, group_desc,
+		hot_tags, pro_img_path,
+		payment_method, states,
+		release_time,
+		created_at, updated_at,
+		deleted_at, interest_date,
+		last_repay_date,
+		term, already_term
+		FROM
+		system_tender_product
+		where states=3 or
+		states=5
+		or states=8
+	</select>
+
+	<!-- 获取新手特权 -->
+	<select id="getNovicePrivilege" resultType="com.tiancaibao.pojo.system.SystemTenderProduct"
+		resultMap="BaseResultMap">
+		SELECT
+		id, project_id,
+		project_name,
+		loan_phone, loan_object,
+		loan_route,
+		loan_amount,
+		count_limit,
+		money_limit, annual_rate,
+		surplus_amount,
+		extra_rate,
+		loan_unit,
+		loan_limit,
+		bid_deadtime,
+		least_invest_amount,
+		most_invest_amount,
+		pro_group, group_desc,
+		hot_tags, pro_img_path,
+		payment_method, states,
+		release_time,
+		created_at, updated_at,
+		deleted_at, interest_date,
+		last_repay_date,
+		term, already_term
+		FROM
+		system_tender_product
+		where hot_tags=2 AND
+		states=3 LIMIT 1
+	</select>
+	<!-- 根据项目id更新项目剩余金额 -->
+	<update id="updateSurplusAmountById" parameterType="com.tiancaibao.pojo.system.SystemTenderProduct">
+		update
+		system_tender_product
+		set surplus_amount =
+		#{surplusAmount,jdbcType=BIGINT}
+		where id =
+		#{id,jdbcType=BIGINT}
+	</update>
+</mapper>

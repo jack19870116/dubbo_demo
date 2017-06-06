@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiancaibao.mapper.system.SystemBannersMapper">
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.system.SystemBanners">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="required_login" jdbcType="TINYINT" property="requiredLogin" />
+    <result column="image_url" jdbcType="VARCHAR" property="imageUrl" />
+    <result column="redirect_url" jdbcType="VARCHAR" property="redirectUrl" />
+    <result column="redirect_pc_url" jdbcType="VARCHAR" property="redirectPcUrl" />
+    <result column="pc_image_url" jdbcType="VARCHAR" property="pcImageUrl" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="mark" jdbcType="TINYINT" property="mark" />
+    <result column="inset" jdbcType="TINYINT" property="inset" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tiancaibao.pojo.system.SystemBannersWithBLOBs">
+    <result column="title" jdbcType="LONGVARCHAR" property="title" />
+    <result column="info" jdbcType="LONGVARCHAR" property="info" />
+    <result column="describe" jdbcType="LONGVARCHAR" property="describe" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, required_login, image_url, redirect_url, redirect_pc_url, pc_image_url, deleted_at, 
+    created_at, updated_at, mark, inset
+  </sql>
+  <sql id="Blob_Column_List">
+    title, info, describe
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tiancaibao.pojo.system.SystemBannersExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_banners
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tiancaibao.pojo.system.SystemBannersExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from system_banners
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="startRow != null">
+      limit #{startRow} , #{pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from system_banners
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from system_banners
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.system.SystemBannersExample">
+    delete from system_banners
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.system.SystemBannersWithBLOBs">
+    insert into system_banners (id, required_login, image_url, 
+      redirect_url, redirect_pc_url, pc_image_url, 
+      deleted_at, created_at, updated_at, 
+      mark, inset, title, 
+      info, describe)
+    values (#{id,jdbcType=INTEGER}, #{requiredLogin,jdbcType=TINYINT}, #{imageUrl,jdbcType=VARCHAR}, 
+      #{redirectUrl,jdbcType=VARCHAR}, #{redirectPcUrl,jdbcType=VARCHAR}, #{pcImageUrl,jdbcType=VARCHAR}, 
+      #{deletedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{mark,jdbcType=TINYINT}, #{inset,jdbcType=TINYINT}, #{title,jdbcType=LONGVARCHAR}, 
+      #{info,jdbcType=LONGVARCHAR}, #{describe,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective"   useGeneratedKeys="true" keyProperty="id" parameterType="com.tiancaibao.pojo.system.SystemBannersWithBLOBs">
+    insert into system_banners
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="requiredLogin != null">
+        required_login,
+      </if>
+      <if test="imageUrl != null">
+        image_url,
+      </if>
+      <if test="redirectUrl != null">
+        redirect_url,
+      </if>
+      <if test="redirectPcUrl != null">
+        redirect_pc_url,
+      </if>
+      <if test="pcImageUrl != null">
+        pc_image_url,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="mark != null">
+        mark,
+      </if>
+      <if test="inset != null">
+        inset,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="info != null">
+        info,
+      </if>
+      <if test="describe != null">
+        describe,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="requiredLogin != null">
+        #{requiredLogin,jdbcType=TINYINT},
+      </if>
+      <if test="imageUrl != null">
+        #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null">
+        #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectPcUrl != null">
+        #{redirectPcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pcImageUrl != null">
+        #{pcImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null">
+        #{mark,jdbcType=TINYINT},
+      </if>
+      <if test="inset != null">
+        #{inset,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="info != null">
+        #{info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describe != null">
+        #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.system.SystemBannersExample" resultType="java.lang.Long">
+    select count(*) from system_banners
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update system_banners
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.requiredLogin != null">
+        required_login = #{record.requiredLogin,jdbcType=TINYINT},
+      </if>
+      <if test="record.imageUrl != null">
+        image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redirectUrl != null">
+        redirect_url = #{record.redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.redirectPcUrl != null">
+        redirect_pc_url = #{record.redirectPcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pcImageUrl != null">
+        pc_image_url = #{record.pcImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedAt != null">
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mark != null">
+        mark = #{record.mark,jdbcType=TINYINT},
+      </if>
+      <if test="record.inset != null">
+        inset = #{record.inset,jdbcType=TINYINT},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.info != null">
+        info = #{record.info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.describe != null">
+        describe = #{record.describe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update system_banners
+    set id = #{record.id,jdbcType=INTEGER},
+      required_login = #{record.requiredLogin,jdbcType=TINYINT},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      redirect_url = #{record.redirectUrl,jdbcType=VARCHAR},
+      redirect_pc_url = #{record.redirectPcUrl,jdbcType=VARCHAR},
+      pc_image_url = #{record.pcImageUrl,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      mark = #{record.mark,jdbcType=TINYINT},
+      inset = #{record.inset,jdbcType=TINYINT},
+      title = #{record.title,jdbcType=LONGVARCHAR},
+      info = #{record.info,jdbcType=LONGVARCHAR},
+      describe = #{record.describe,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update system_banners
+    set id = #{record.id,jdbcType=INTEGER},
+      required_login = #{record.requiredLogin,jdbcType=TINYINT},
+      image_url = #{record.imageUrl,jdbcType=VARCHAR},
+      redirect_url = #{record.redirectUrl,jdbcType=VARCHAR},
+      redirect_pc_url = #{record.redirectPcUrl,jdbcType=VARCHAR},
+      pc_image_url = #{record.pcImageUrl,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      mark = #{record.mark,jdbcType=TINYINT},
+      inset = #{record.inset,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.system.SystemBannersWithBLOBs">
+    update system_banners
+    <set>
+      <if test="requiredLogin != null">
+        required_login = #{requiredLogin,jdbcType=TINYINT},
+      </if>
+      <if test="imageUrl != null">
+        image_url = #{imageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectUrl != null">
+        redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="redirectPcUrl != null">
+        redirect_pc_url = #{redirectPcUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="pcImageUrl != null">
+        pc_image_url = #{pcImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mark != null">
+        mark = #{mark,jdbcType=TINYINT},
+      </if>
+      <if test="inset != null">
+        inset = #{inset,jdbcType=TINYINT},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="info != null">
+        info = #{info,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="describe != null">
+        describe = #{describe,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiancaibao.pojo.system.SystemBannersWithBLOBs">
+    update system_banners
+    set required_login = #{requiredLogin,jdbcType=TINYINT},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      redirect_pc_url = #{redirectPcUrl,jdbcType=VARCHAR},
+      pc_image_url = #{pcImageUrl,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      mark = #{mark,jdbcType=TINYINT},
+      inset = #{inset,jdbcType=TINYINT},
+      title = #{title,jdbcType=LONGVARCHAR},
+      info = #{info,jdbcType=LONGVARCHAR},
+      describe = #{describe,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.system.SystemBanners">
+    update system_banners
+    set required_login = #{requiredLogin,jdbcType=TINYINT},
+      image_url = #{imageUrl,jdbcType=VARCHAR},
+      redirect_url = #{redirectUrl,jdbcType=VARCHAR},
+      redirect_pc_url = #{redirectPcUrl,jdbcType=VARCHAR},
+      pc_image_url = #{pcImageUrl,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      mark = #{mark,jdbcType=TINYINT},
+      inset = #{inset,jdbcType=TINYINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

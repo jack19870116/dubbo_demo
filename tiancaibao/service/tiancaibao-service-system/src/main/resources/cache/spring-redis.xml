@@ -1,0 +1,81 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cache="http://www.springframework.org/schema/cache"
+	xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.2.xsd  
+        http://www.springframework.org/schema/cache  
+        http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+	    http://www.springframework.org/schema/context    
+        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<!-- <cache:annotation-driven cache-manager="userRedisCacheManager" /> -->
+
+	<!-- Redis 连接池 -->
+	<bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig">
+		<property name="maxTotal" value="${redis.pool.maxActive}" />
+		<property name="maxIdle" value="${redis.pool.maxIdle}" />
+		<property name="minIdle" value="2"></property>
+		<property name="maxWaitMillis" value="${redis.pool.maxWait}" />
+		<property name="minEvictableIdleTimeMillis" value="300000"></property>
+		<property name="numTestsPerEvictionRun" value="3"></property>
+		<property name="timeBetweenEvictionRunsMillis" value="60000"></property>
+		<property name="testOnBorrow" value="${redis.pool.testOnBorrow}" />
+		<property name="testOnReturn" value="${redis.pool.testOnReturn}" />
+	</bean>
+
+	<!-- Redis 连接工厂 -->
+	<bean id="jedisConnectionFactory"
+		class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+		destroy-method="destroy">
+		<property name="poolConfig" ref="jedisPoolConfig"></property>
+		<property name="hostName" value="${redis.ip}" />
+		<property name="port" value="${redis.port}" />
+		<property name="database" value="0" />
+		<property name="password" value="" />
+		<property name="usePool" value="true" />
+		<!-- property name="password" value="${redis.password}" -->
+		<property name="timeout" value="${redis.timeout}" />
+	</bean>
+
+	<!-- Redis 操作模板 -->
+
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory" />
+		<!-- 序列化方式 建议key/hashKey采用StringRedisSerializer。 -->
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+	</bean>
+
+
+	<bean id="stringRedisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
+		<property name="connectionFactory" ref="jedisConnectionFactory" />
+
+		<!-- 序列化方式 建议key/hashKey采用StringRedisSerializer。 -->
+		<property name="keySerializer">
+			<bean
+				class="org.springframework.data.redis.serializer.StringRedisSerializer" />
+		</property>
+	</bean>
+
+	<!-- cache manager -->
+
+	<!-- cache manager -->
+	<!-- spring自己的缓存管理器，这里定义了缓存位置名称 ，即注解中的value -->
+	<bean id="userRedisCacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+		<property name="caches">
+			<set>
+				<!-- 这里可以配置多个redis -->
+				<!-- <bean class="com.cn.util.RedisCache"> <property name="redisTemplate" 
+					ref="redisTemplate" /> <property name="name" value="default"/> </bean> -->
+				<bean class="com.tiancaibao.cache.RedisCache">
+					<property name="redisTemplate" ref="redisTemplate" />
+					<property name="name" value="UserCache" />
+					<!-- common名称要在类或方法的注解中使用 -->
+				</bean>
+			</set>
+		</property>
+	</bean>
+
+</beans>
