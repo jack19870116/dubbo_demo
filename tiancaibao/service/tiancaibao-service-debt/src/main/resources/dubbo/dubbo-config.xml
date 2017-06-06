@@ -1,0 +1,63 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+		http://www.springframework.org/schema/mvc 
+		http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+		http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/task
+   		http://www.springframework.org/schema/task/spring-task-4.0.xsd
+		http://code.alibabatech.com/schema/dubbo        
+		http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<!-- 配置dubbo的服务提供方 -->
+
+	<!-- 指定服务方法的名称 -->
+	<dubbo:application name="service-debt-service" />
+
+	<!-- 配置dubbo直连 -->
+	<!-- <dubbo:registry address="N/A"/> -->
+	<!-- 配置注册中心 -->
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+
+	<!-- 配置dubbo协议 -->
+	<dubbo:protocol name="dubbo" port="${dubbo.debtService.port}"
+		host="${dubbo.debtService.host}" />
+
+
+	<!-- 提供的服务 业务逻辑层 -->
+	<dubbo:service ref="debtBuyService"
+		interface="com.tiancaibao.service.interfaces.debt.DebtBuyService" />
+	<!-- 活期债转赎回业务层接口 -->
+	<dubbo:service ref="debtBizRedeemService"
+		interface="com.tiancaibao.service.interfaces.debt.biz.IDebtBizRedeemService" />
+	<!-- 提供的服务 底层 -->
+	<dubbo:service ref="debtCurrentTransferService"
+		interface="com.tiancaibao.service.interfaces.debt.IDebtCurrentTransferService" />
+	<dubbo:service ref="debtOriginalAssetBillsService"
+		interface="com.tiancaibao.service.interfaces.debt.IDebtOriginalAssetBillsService" />
+	<!-- 债权接收表的服务 -->
+	<dubbo:service ref="debtCurrentReceiveService"
+		interface="com.tiancaibao.service.interfaces.debt.IDebtCurrentReceiveService" />
+	<!-- 用户持有表的服务 -->
+	<dubbo:service ref="debtCurrentUserHoldingService"
+		interface="com.tiancaibao.service.interfaces.debt.IDebtCurrentUserHoldingService" />
+
+	<!-- 依赖的服务 -->
+	<dubbo:reference id="userService"
+		interface="com.tiancaibao.service.interfaces.user.IUserService" />
+	<!-- 通知服务，用来不通过消息队列发送短信 -->
+	<!-- 队列服务 -->
+	<dubbo:reference id="mqMessageSender"
+		interface="com.tiancaibao.service.interfaces.mq.IMqMessageService"
+		check="false" />
+
+</beans>

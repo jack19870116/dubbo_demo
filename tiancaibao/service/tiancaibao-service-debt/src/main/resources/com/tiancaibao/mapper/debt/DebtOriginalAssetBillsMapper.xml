@@ -1,0 +1,963 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tiancaibao.mapper.debt.DebtOriginalAssetBillsMapper">
+  <resultMap id="BaseResultMap" type="com.tiancaibao.pojo.debt.DebtOriginalAssetBills">
+    <!--          -->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="show_name" jdbcType="VARCHAR" property="showName" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="agency_id" jdbcType="BIGINT" property="agencyId" />
+    <result column="asset_class" jdbcType="VARCHAR" property="assetClass" />
+    <result column="asset_type" jdbcType="VARCHAR" property="assetType" />
+    <result column="repayment_type" jdbcType="VARCHAR" property="repaymentType" />
+    <result column="buy_amount" jdbcType="BIGINT" property="buyAmount" />
+    <result column="group_amount" jdbcType="BIGINT" property="groupAmount" />
+    <result column="finance_amount" jdbcType="BIGINT" property="financeAmount" />
+    <result column="arrival_amount" jdbcType="BIGINT" property="arrivalAmount" />
+    <result column="buy_fee" jdbcType="BIGINT" property="buyFee" />
+    <result column="buy_rate_type" jdbcType="CHAR" property="buyRateType" />
+    <result column="rate_sync_url" jdbcType="VARCHAR" property="rateSyncUrl" />
+    <result column="buy_rate" jdbcType="BIGINT" property="buyRate" />
+    <result column="group_rate" jdbcType="BIGINT" property="groupRate" />
+    <result column="sale_rate" jdbcType="BIGINT" property="saleRate" />
+    <result column="interest_start_date" jdbcType="DATE" property="interestStartDate" />
+    <result column="end_date" jdbcType="DATE" property="endDate" />
+    <result column="days" jdbcType="BIGINT" property="days" />
+    <result column="is_treated" jdbcType="TINYINT" property="isTreated" />
+    <result column="is_asset_pool" jdbcType="TINYINT" property="isAssetPool" />
+    <result column="redeem_fee" jdbcType="BIGINT" property="redeemFee" />
+    <result column="total_debt_amount" jdbcType="BIGINT" property="totalDebtAmount" />
+    <result column="margin_rate" jdbcType="INTEGER" property="marginRate" />
+    <result column="risk_reserve_rate" jdbcType="INTEGER" property="riskReserveRate" />
+    <result column="loan_name" jdbcType="VARCHAR" property="loanName" />
+    <result column="loan_usage" jdbcType="CHAR" property="loanUsage" />
+    <result column="repayment_source" jdbcType="CHAR" property="repaymentSource" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="loan_img" jdbcType="VARCHAR" property="loanImg" />
+    <result column="guarantee_person" jdbcType="VARCHAR" property="guaranteePerson" />
+    <result column="agreement_img" jdbcType="CHAR" property="agreementImg" />
+    <result column="guarantee_img" jdbcType="VARCHAR" property="guaranteeImg" />
+    <result column="guarantee_info" jdbcType="VARCHAR" property="guaranteeInfo" />
+    <result column="other_info" jdbcType="VARCHAR" property="otherInfo" />
+    <result column="deleted_at" jdbcType="TIMESTAMP" property="deletedAt" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="original_asset_id" jdbcType="BIGINT" property="originalAssetId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsWithBLOBs">
+    <!--          -->
+    <result column="ahead_end_reason" jdbcType="LONGVARCHAR" property="aheadEndReason" />
+    <result column="loan_all_img" jdbcType="LONGVARCHAR" property="loanAllImg" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <!--          -->
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <!--          -->
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    <!--          -->
+    id, user_id, name, show_name, status, agency_id, asset_class, asset_type, repayment_type, 
+    buy_amount, group_amount, finance_amount, arrival_amount, buy_fee, buy_rate_type, 
+    rate_sync_url, buy_rate, group_rate, sale_rate, interest_start_date, end_date, days, 
+    is_treated, is_asset_pool, redeem_fee, total_debt_amount, margin_rate, risk_reserve_rate, 
+    loan_name, loan_usage, repayment_source, phone, loan_img, guarantee_person, agreement_img, 
+    guarantee_img, guarantee_info, other_info, deleted_at, created_at, updated_at, original_asset_id
+  </sql>
+  <sql id="Blob_Column_List">
+    <!--          -->
+    ahead_end_reason, loan_all_img
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsExample" resultMap="ResultMapWithBLOBs">
+    <!--          -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from debt_original_asset_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsExample" resultMap="BaseResultMap">
+    <!--          -->
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from debt_original_asset_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    <!--          -->
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from debt_original_asset_bills
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    <!--          -->
+    delete from debt_original_asset_bills
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsExample">
+    <!--          -->
+    delete from debt_original_asset_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsWithBLOBs">
+    <!--          -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into debt_original_asset_bills (user_id, name, show_name, 
+      status, agency_id, asset_class, 
+      asset_type, repayment_type, buy_amount, 
+      group_amount, finance_amount, arrival_amount, 
+      buy_fee, buy_rate_type, rate_sync_url, 
+      buy_rate, group_rate, sale_rate, 
+      interest_start_date, end_date, days, 
+      is_treated, is_asset_pool, redeem_fee, 
+      total_debt_amount, margin_rate, risk_reserve_rate, 
+      loan_name, loan_usage, repayment_source, 
+      phone, loan_img, guarantee_person, 
+      agreement_img, guarantee_img, guarantee_info, 
+      other_info, deleted_at, created_at, 
+      updated_at, original_asset_id, ahead_end_reason, 
+      loan_all_img)
+    values (#{userId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{showName,jdbcType=VARCHAR}, 
+      #{status,jdbcType=CHAR}, #{agencyId,jdbcType=BIGINT}, #{assetClass,jdbcType=VARCHAR}, 
+      #{assetType,jdbcType=VARCHAR}, #{repaymentType,jdbcType=VARCHAR}, #{buyAmount,jdbcType=BIGINT}, 
+      #{groupAmount,jdbcType=BIGINT}, #{financeAmount,jdbcType=BIGINT}, #{arrivalAmount,jdbcType=BIGINT}, 
+      #{buyFee,jdbcType=BIGINT}, #{buyRateType,jdbcType=CHAR}, #{rateSyncUrl,jdbcType=VARCHAR}, 
+      #{buyRate,jdbcType=BIGINT}, #{groupRate,jdbcType=BIGINT}, #{saleRate,jdbcType=BIGINT}, 
+      #{interestStartDate,jdbcType=DATE}, #{endDate,jdbcType=DATE}, #{days,jdbcType=BIGINT}, 
+      #{isTreated,jdbcType=TINYINT}, #{isAssetPool,jdbcType=TINYINT}, #{redeemFee,jdbcType=BIGINT}, 
+      #{totalDebtAmount,jdbcType=BIGINT}, #{marginRate,jdbcType=INTEGER}, #{riskReserveRate,jdbcType=INTEGER}, 
+      #{loanName,jdbcType=VARCHAR}, #{loanUsage,jdbcType=CHAR}, #{repaymentSource,jdbcType=CHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{loanImg,jdbcType=VARCHAR}, #{guaranteePerson,jdbcType=VARCHAR}, 
+      #{agreementImg,jdbcType=CHAR}, #{guaranteeImg,jdbcType=VARCHAR}, #{guaranteeInfo,jdbcType=VARCHAR}, 
+      #{otherInfo,jdbcType=VARCHAR}, #{deletedAt,jdbcType=TIMESTAMP}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{originalAssetId,jdbcType=BIGINT}, #{aheadEndReason,jdbcType=LONGVARCHAR}, 
+      #{loanAllImg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsWithBLOBs">
+    <!--          -->
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into debt_original_asset_bills
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="showName != null">
+        show_name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="agencyId != null">
+        agency_id,
+      </if>
+      <if test="assetClass != null">
+        asset_class,
+      </if>
+      <if test="assetType != null">
+        asset_type,
+      </if>
+      <if test="repaymentType != null">
+        repayment_type,
+      </if>
+      <if test="buyAmount != null">
+        buy_amount,
+      </if>
+      <if test="groupAmount != null">
+        group_amount,
+      </if>
+      <if test="financeAmount != null">
+        finance_amount,
+      </if>
+      <if test="arrivalAmount != null">
+        arrival_amount,
+      </if>
+      <if test="buyFee != null">
+        buy_fee,
+      </if>
+      <if test="buyRateType != null">
+        buy_rate_type,
+      </if>
+      <if test="rateSyncUrl != null">
+        rate_sync_url,
+      </if>
+      <if test="buyRate != null">
+        buy_rate,
+      </if>
+      <if test="groupRate != null">
+        group_rate,
+      </if>
+      <if test="saleRate != null">
+        sale_rate,
+      </if>
+      <if test="interestStartDate != null">
+        interest_start_date,
+      </if>
+      <if test="endDate != null">
+        end_date,
+      </if>
+      <if test="days != null">
+        days,
+      </if>
+      <if test="isTreated != null">
+        is_treated,
+      </if>
+      <if test="isAssetPool != null">
+        is_asset_pool,
+      </if>
+      <if test="redeemFee != null">
+        redeem_fee,
+      </if>
+      <if test="totalDebtAmount != null">
+        total_debt_amount,
+      </if>
+      <if test="marginRate != null">
+        margin_rate,
+      </if>
+      <if test="riskReserveRate != null">
+        risk_reserve_rate,
+      </if>
+      <if test="loanName != null">
+        loan_name,
+      </if>
+      <if test="loanUsage != null">
+        loan_usage,
+      </if>
+      <if test="repaymentSource != null">
+        repayment_source,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="loanImg != null">
+        loan_img,
+      </if>
+      <if test="guaranteePerson != null">
+        guarantee_person,
+      </if>
+      <if test="agreementImg != null">
+        agreement_img,
+      </if>
+      <if test="guaranteeImg != null">
+        guarantee_img,
+      </if>
+      <if test="guaranteeInfo != null">
+        guarantee_info,
+      </if>
+      <if test="otherInfo != null">
+        other_info,
+      </if>
+      <if test="deletedAt != null">
+        deleted_at,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="originalAssetId != null">
+        original_asset_id,
+      </if>
+      <if test="aheadEndReason != null">
+        ahead_end_reason,
+      </if>
+      <if test="loanAllImg != null">
+        loan_all_img,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="showName != null">
+        #{showName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="agencyId != null">
+        #{agencyId,jdbcType=BIGINT},
+      </if>
+      <if test="assetClass != null">
+        #{assetClass,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null">
+        #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentType != null">
+        #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAmount != null">
+        #{buyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="groupAmount != null">
+        #{groupAmount,jdbcType=BIGINT},
+      </if>
+      <if test="financeAmount != null">
+        #{financeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="arrivalAmount != null">
+        #{arrivalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="buyFee != null">
+        #{buyFee,jdbcType=BIGINT},
+      </if>
+      <if test="buyRateType != null">
+        #{buyRateType,jdbcType=CHAR},
+      </if>
+      <if test="rateSyncUrl != null">
+        #{rateSyncUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="buyRate != null">
+        #{buyRate,jdbcType=BIGINT},
+      </if>
+      <if test="groupRate != null">
+        #{groupRate,jdbcType=BIGINT},
+      </if>
+      <if test="saleRate != null">
+        #{saleRate,jdbcType=BIGINT},
+      </if>
+      <if test="interestStartDate != null">
+        #{interestStartDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        #{endDate,jdbcType=DATE},
+      </if>
+      <if test="days != null">
+        #{days,jdbcType=BIGINT},
+      </if>
+      <if test="isTreated != null">
+        #{isTreated,jdbcType=TINYINT},
+      </if>
+      <if test="isAssetPool != null">
+        #{isAssetPool,jdbcType=TINYINT},
+      </if>
+      <if test="redeemFee != null">
+        #{redeemFee,jdbcType=BIGINT},
+      </if>
+      <if test="totalDebtAmount != null">
+        #{totalDebtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="marginRate != null">
+        #{marginRate,jdbcType=INTEGER},
+      </if>
+      <if test="riskReserveRate != null">
+        #{riskReserveRate,jdbcType=INTEGER},
+      </if>
+      <if test="loanName != null">
+        #{loanName,jdbcType=VARCHAR},
+      </if>
+      <if test="loanUsage != null">
+        #{loanUsage,jdbcType=CHAR},
+      </if>
+      <if test="repaymentSource != null">
+        #{repaymentSource,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanImg != null">
+        #{loanImg,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteePerson != null">
+        #{guaranteePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementImg != null">
+        #{agreementImg,jdbcType=CHAR},
+      </if>
+      <if test="guaranteeImg != null">
+        #{guaranteeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeInfo != null">
+        #{guaranteeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null">
+        #{otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originalAssetId != null">
+        #{originalAssetId,jdbcType=BIGINT},
+      </if>
+      <if test="aheadEndReason != null">
+        #{aheadEndReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="loanAllImg != null">
+        #{loanAllImg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsExample" resultType="java.lang.Long">
+    <!--          -->
+    select count(*) from debt_original_asset_bills
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    <!--          -->
+    update debt_original_asset_bills
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.showName != null">
+        show_name = #{record.showName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.agencyId != null">
+        agency_id = #{record.agencyId,jdbcType=BIGINT},
+      </if>
+      <if test="record.assetClass != null">
+        asset_class = #{record.assetClass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.assetType != null">
+        asset_type = #{record.assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.repaymentType != null">
+        repayment_type = #{record.repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyAmount != null">
+        buy_amount = #{record.buyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.groupAmount != null">
+        group_amount = #{record.groupAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.financeAmount != null">
+        finance_amount = #{record.financeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.arrivalAmount != null">
+        arrival_amount = #{record.arrivalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyFee != null">
+        buy_fee = #{record.buyFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.buyRateType != null">
+        buy_rate_type = #{record.buyRateType,jdbcType=CHAR},
+      </if>
+      <if test="record.rateSyncUrl != null">
+        rate_sync_url = #{record.rateSyncUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.buyRate != null">
+        buy_rate = #{record.buyRate,jdbcType=BIGINT},
+      </if>
+      <if test="record.groupRate != null">
+        group_rate = #{record.groupRate,jdbcType=BIGINT},
+      </if>
+      <if test="record.saleRate != null">
+        sale_rate = #{record.saleRate,jdbcType=BIGINT},
+      </if>
+      <if test="record.interestStartDate != null">
+        interest_start_date = #{record.interestStartDate,jdbcType=DATE},
+      </if>
+      <if test="record.endDate != null">
+        end_date = #{record.endDate,jdbcType=DATE},
+      </if>
+      <if test="record.days != null">
+        days = #{record.days,jdbcType=BIGINT},
+      </if>
+      <if test="record.isTreated != null">
+        is_treated = #{record.isTreated,jdbcType=TINYINT},
+      </if>
+      <if test="record.isAssetPool != null">
+        is_asset_pool = #{record.isAssetPool,jdbcType=TINYINT},
+      </if>
+      <if test="record.redeemFee != null">
+        redeem_fee = #{record.redeemFee,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalDebtAmount != null">
+        total_debt_amount = #{record.totalDebtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="record.marginRate != null">
+        margin_rate = #{record.marginRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.riskReserveRate != null">
+        risk_reserve_rate = #{record.riskReserveRate,jdbcType=INTEGER},
+      </if>
+      <if test="record.loanName != null">
+        loan_name = #{record.loanName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanUsage != null">
+        loan_usage = #{record.loanUsage,jdbcType=CHAR},
+      </if>
+      <if test="record.repaymentSource != null">
+        repayment_source = #{record.repaymentSource,jdbcType=CHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanImg != null">
+        loan_img = #{record.loanImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteePerson != null">
+        guarantee_person = #{record.guaranteePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agreementImg != null">
+        agreement_img = #{record.agreementImg,jdbcType=CHAR},
+      </if>
+      <if test="record.guaranteeImg != null">
+        guarantee_img = #{record.guaranteeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.guaranteeInfo != null">
+        guarantee_info = #{record.guaranteeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.otherInfo != null">
+        other_info = #{record.otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deletedAt != null">
+        deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdAt != null">
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedAt != null">
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.originalAssetId != null">
+        original_asset_id = #{record.originalAssetId,jdbcType=BIGINT},
+      </if>
+      <if test="record.aheadEndReason != null">
+        ahead_end_reason = #{record.aheadEndReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.loanAllImg != null">
+        loan_all_img = #{record.loanAllImg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    <!--          -->
+    update debt_original_asset_bills
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      show_name = #{record.showName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      agency_id = #{record.agencyId,jdbcType=BIGINT},
+      asset_class = #{record.assetClass,jdbcType=VARCHAR},
+      asset_type = #{record.assetType,jdbcType=VARCHAR},
+      repayment_type = #{record.repaymentType,jdbcType=VARCHAR},
+      buy_amount = #{record.buyAmount,jdbcType=BIGINT},
+      group_amount = #{record.groupAmount,jdbcType=BIGINT},
+      finance_amount = #{record.financeAmount,jdbcType=BIGINT},
+      arrival_amount = #{record.arrivalAmount,jdbcType=BIGINT},
+      buy_fee = #{record.buyFee,jdbcType=BIGINT},
+      buy_rate_type = #{record.buyRateType,jdbcType=CHAR},
+      rate_sync_url = #{record.rateSyncUrl,jdbcType=VARCHAR},
+      buy_rate = #{record.buyRate,jdbcType=BIGINT},
+      group_rate = #{record.groupRate,jdbcType=BIGINT},
+      sale_rate = #{record.saleRate,jdbcType=BIGINT},
+      interest_start_date = #{record.interestStartDate,jdbcType=DATE},
+      end_date = #{record.endDate,jdbcType=DATE},
+      days = #{record.days,jdbcType=BIGINT},
+      is_treated = #{record.isTreated,jdbcType=TINYINT},
+      is_asset_pool = #{record.isAssetPool,jdbcType=TINYINT},
+      redeem_fee = #{record.redeemFee,jdbcType=BIGINT},
+      total_debt_amount = #{record.totalDebtAmount,jdbcType=BIGINT},
+      margin_rate = #{record.marginRate,jdbcType=INTEGER},
+      risk_reserve_rate = #{record.riskReserveRate,jdbcType=INTEGER},
+      loan_name = #{record.loanName,jdbcType=VARCHAR},
+      loan_usage = #{record.loanUsage,jdbcType=CHAR},
+      repayment_source = #{record.repaymentSource,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      loan_img = #{record.loanImg,jdbcType=VARCHAR},
+      guarantee_person = #{record.guaranteePerson,jdbcType=VARCHAR},
+      agreement_img = #{record.agreementImg,jdbcType=CHAR},
+      guarantee_img = #{record.guaranteeImg,jdbcType=VARCHAR},
+      guarantee_info = #{record.guaranteeInfo,jdbcType=VARCHAR},
+      other_info = #{record.otherInfo,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      original_asset_id = #{record.originalAssetId,jdbcType=BIGINT},
+      ahead_end_reason = #{record.aheadEndReason,jdbcType=LONGVARCHAR},
+      loan_all_img = #{record.loanAllImg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    <!--          -->
+    update debt_original_asset_bills
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=BIGINT},
+      name = #{record.name,jdbcType=VARCHAR},
+      show_name = #{record.showName,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      agency_id = #{record.agencyId,jdbcType=BIGINT},
+      asset_class = #{record.assetClass,jdbcType=VARCHAR},
+      asset_type = #{record.assetType,jdbcType=VARCHAR},
+      repayment_type = #{record.repaymentType,jdbcType=VARCHAR},
+      buy_amount = #{record.buyAmount,jdbcType=BIGINT},
+      group_amount = #{record.groupAmount,jdbcType=BIGINT},
+      finance_amount = #{record.financeAmount,jdbcType=BIGINT},
+      arrival_amount = #{record.arrivalAmount,jdbcType=BIGINT},
+      buy_fee = #{record.buyFee,jdbcType=BIGINT},
+      buy_rate_type = #{record.buyRateType,jdbcType=CHAR},
+      rate_sync_url = #{record.rateSyncUrl,jdbcType=VARCHAR},
+      buy_rate = #{record.buyRate,jdbcType=BIGINT},
+      group_rate = #{record.groupRate,jdbcType=BIGINT},
+      sale_rate = #{record.saleRate,jdbcType=BIGINT},
+      interest_start_date = #{record.interestStartDate,jdbcType=DATE},
+      end_date = #{record.endDate,jdbcType=DATE},
+      days = #{record.days,jdbcType=BIGINT},
+      is_treated = #{record.isTreated,jdbcType=TINYINT},
+      is_asset_pool = #{record.isAssetPool,jdbcType=TINYINT},
+      redeem_fee = #{record.redeemFee,jdbcType=BIGINT},
+      total_debt_amount = #{record.totalDebtAmount,jdbcType=BIGINT},
+      margin_rate = #{record.marginRate,jdbcType=INTEGER},
+      risk_reserve_rate = #{record.riskReserveRate,jdbcType=INTEGER},
+      loan_name = #{record.loanName,jdbcType=VARCHAR},
+      loan_usage = #{record.loanUsage,jdbcType=CHAR},
+      repayment_source = #{record.repaymentSource,jdbcType=CHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      loan_img = #{record.loanImg,jdbcType=VARCHAR},
+      guarantee_person = #{record.guaranteePerson,jdbcType=VARCHAR},
+      agreement_img = #{record.agreementImg,jdbcType=CHAR},
+      guarantee_img = #{record.guaranteeImg,jdbcType=VARCHAR},
+      guarantee_info = #{record.guaranteeInfo,jdbcType=VARCHAR},
+      other_info = #{record.otherInfo,jdbcType=VARCHAR},
+      deleted_at = #{record.deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      original_asset_id = #{record.originalAssetId,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsWithBLOBs">
+    <!--          -->
+    update debt_original_asset_bills
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="showName != null">
+        show_name = #{showName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="agencyId != null">
+        agency_id = #{agencyId,jdbcType=BIGINT},
+      </if>
+      <if test="assetClass != null">
+        asset_class = #{assetClass,jdbcType=VARCHAR},
+      </if>
+      <if test="assetType != null">
+        asset_type = #{assetType,jdbcType=VARCHAR},
+      </if>
+      <if test="repaymentType != null">
+        repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      </if>
+      <if test="buyAmount != null">
+        buy_amount = #{buyAmount,jdbcType=BIGINT},
+      </if>
+      <if test="groupAmount != null">
+        group_amount = #{groupAmount,jdbcType=BIGINT},
+      </if>
+      <if test="financeAmount != null">
+        finance_amount = #{financeAmount,jdbcType=BIGINT},
+      </if>
+      <if test="arrivalAmount != null">
+        arrival_amount = #{arrivalAmount,jdbcType=BIGINT},
+      </if>
+      <if test="buyFee != null">
+        buy_fee = #{buyFee,jdbcType=BIGINT},
+      </if>
+      <if test="buyRateType != null">
+        buy_rate_type = #{buyRateType,jdbcType=CHAR},
+      </if>
+      <if test="rateSyncUrl != null">
+        rate_sync_url = #{rateSyncUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="buyRate != null">
+        buy_rate = #{buyRate,jdbcType=BIGINT},
+      </if>
+      <if test="groupRate != null">
+        group_rate = #{groupRate,jdbcType=BIGINT},
+      </if>
+      <if test="saleRate != null">
+        sale_rate = #{saleRate,jdbcType=BIGINT},
+      </if>
+      <if test="interestStartDate != null">
+        interest_start_date = #{interestStartDate,jdbcType=DATE},
+      </if>
+      <if test="endDate != null">
+        end_date = #{endDate,jdbcType=DATE},
+      </if>
+      <if test="days != null">
+        days = #{days,jdbcType=BIGINT},
+      </if>
+      <if test="isTreated != null">
+        is_treated = #{isTreated,jdbcType=TINYINT},
+      </if>
+      <if test="isAssetPool != null">
+        is_asset_pool = #{isAssetPool,jdbcType=TINYINT},
+      </if>
+      <if test="redeemFee != null">
+        redeem_fee = #{redeemFee,jdbcType=BIGINT},
+      </if>
+      <if test="totalDebtAmount != null">
+        total_debt_amount = #{totalDebtAmount,jdbcType=BIGINT},
+      </if>
+      <if test="marginRate != null">
+        margin_rate = #{marginRate,jdbcType=INTEGER},
+      </if>
+      <if test="riskReserveRate != null">
+        risk_reserve_rate = #{riskReserveRate,jdbcType=INTEGER},
+      </if>
+      <if test="loanName != null">
+        loan_name = #{loanName,jdbcType=VARCHAR},
+      </if>
+      <if test="loanUsage != null">
+        loan_usage = #{loanUsage,jdbcType=CHAR},
+      </if>
+      <if test="repaymentSource != null">
+        repayment_source = #{repaymentSource,jdbcType=CHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="loanImg != null">
+        loan_img = #{loanImg,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteePerson != null">
+        guarantee_person = #{guaranteePerson,jdbcType=VARCHAR},
+      </if>
+      <if test="agreementImg != null">
+        agreement_img = #{agreementImg,jdbcType=CHAR},
+      </if>
+      <if test="guaranteeImg != null">
+        guarantee_img = #{guaranteeImg,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeInfo != null">
+        guarantee_info = #{guaranteeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="otherInfo != null">
+        other_info = #{otherInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="deletedAt != null">
+        deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="originalAssetId != null">
+        original_asset_id = #{originalAssetId,jdbcType=BIGINT},
+      </if>
+      <if test="aheadEndReason != null">
+        ahead_end_reason = #{aheadEndReason,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="loanAllImg != null">
+        loan_all_img = #{loanAllImg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBillsWithBLOBs">
+    <!--          -->
+    update debt_original_asset_bills
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      show_name = #{showName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      agency_id = #{agencyId,jdbcType=BIGINT},
+      asset_class = #{assetClass,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=VARCHAR},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      buy_amount = #{buyAmount,jdbcType=BIGINT},
+      group_amount = #{groupAmount,jdbcType=BIGINT},
+      finance_amount = #{financeAmount,jdbcType=BIGINT},
+      arrival_amount = #{arrivalAmount,jdbcType=BIGINT},
+      buy_fee = #{buyFee,jdbcType=BIGINT},
+      buy_rate_type = #{buyRateType,jdbcType=CHAR},
+      rate_sync_url = #{rateSyncUrl,jdbcType=VARCHAR},
+      buy_rate = #{buyRate,jdbcType=BIGINT},
+      group_rate = #{groupRate,jdbcType=BIGINT},
+      sale_rate = #{saleRate,jdbcType=BIGINT},
+      interest_start_date = #{interestStartDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      days = #{days,jdbcType=BIGINT},
+      is_treated = #{isTreated,jdbcType=TINYINT},
+      is_asset_pool = #{isAssetPool,jdbcType=TINYINT},
+      redeem_fee = #{redeemFee,jdbcType=BIGINT},
+      total_debt_amount = #{totalDebtAmount,jdbcType=BIGINT},
+      margin_rate = #{marginRate,jdbcType=INTEGER},
+      risk_reserve_rate = #{riskReserveRate,jdbcType=INTEGER},
+      loan_name = #{loanName,jdbcType=VARCHAR},
+      loan_usage = #{loanUsage,jdbcType=CHAR},
+      repayment_source = #{repaymentSource,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      loan_img = #{loanImg,jdbcType=VARCHAR},
+      guarantee_person = #{guaranteePerson,jdbcType=VARCHAR},
+      agreement_img = #{agreementImg,jdbcType=CHAR},
+      guarantee_img = #{guaranteeImg,jdbcType=VARCHAR},
+      guarantee_info = #{guaranteeInfo,jdbcType=VARCHAR},
+      other_info = #{otherInfo,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      original_asset_id = #{originalAssetId,jdbcType=BIGINT},
+      ahead_end_reason = #{aheadEndReason,jdbcType=LONGVARCHAR},
+      loan_all_img = #{loanAllImg,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tiancaibao.pojo.debt.DebtOriginalAssetBills">
+    <!--          -->
+    update debt_original_asset_bills
+    set user_id = #{userId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      show_name = #{showName,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      agency_id = #{agencyId,jdbcType=BIGINT},
+      asset_class = #{assetClass,jdbcType=VARCHAR},
+      asset_type = #{assetType,jdbcType=VARCHAR},
+      repayment_type = #{repaymentType,jdbcType=VARCHAR},
+      buy_amount = #{buyAmount,jdbcType=BIGINT},
+      group_amount = #{groupAmount,jdbcType=BIGINT},
+      finance_amount = #{financeAmount,jdbcType=BIGINT},
+      arrival_amount = #{arrivalAmount,jdbcType=BIGINT},
+      buy_fee = #{buyFee,jdbcType=BIGINT},
+      buy_rate_type = #{buyRateType,jdbcType=CHAR},
+      rate_sync_url = #{rateSyncUrl,jdbcType=VARCHAR},
+      buy_rate = #{buyRate,jdbcType=BIGINT},
+      group_rate = #{groupRate,jdbcType=BIGINT},
+      sale_rate = #{saleRate,jdbcType=BIGINT},
+      interest_start_date = #{interestStartDate,jdbcType=DATE},
+      end_date = #{endDate,jdbcType=DATE},
+      days = #{days,jdbcType=BIGINT},
+      is_treated = #{isTreated,jdbcType=TINYINT},
+      is_asset_pool = #{isAssetPool,jdbcType=TINYINT},
+      redeem_fee = #{redeemFee,jdbcType=BIGINT},
+      total_debt_amount = #{totalDebtAmount,jdbcType=BIGINT},
+      margin_rate = #{marginRate,jdbcType=INTEGER},
+      risk_reserve_rate = #{riskReserveRate,jdbcType=INTEGER},
+      loan_name = #{loanName,jdbcType=VARCHAR},
+      loan_usage = #{loanUsage,jdbcType=CHAR},
+      repayment_source = #{repaymentSource,jdbcType=CHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      loan_img = #{loanImg,jdbcType=VARCHAR},
+      guarantee_person = #{guaranteePerson,jdbcType=VARCHAR},
+      agreement_img = #{agreementImg,jdbcType=CHAR},
+      guarantee_img = #{guaranteeImg,jdbcType=VARCHAR},
+      guarantee_info = #{guaranteeInfo,jdbcType=VARCHAR},
+      other_info = #{otherInfo,jdbcType=VARCHAR},
+      deleted_at = #{deletedAt,jdbcType=TIMESTAMP},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      original_asset_id = #{originalAssetId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
